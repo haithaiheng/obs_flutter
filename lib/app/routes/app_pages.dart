@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
+import 'package:obs/app/modules/mainScreen/bindings/main_screen_binding.dart';
+import 'package:obs/app/modules/mainScreen/views/main_screen_view.dart';
 
 import '../modules/book_details/bindings/book_details_binding.dart';
 import '../modules/book_details/views/book_details_view.dart';
-import '../modules/buttomnavigationbaritems/bindings/buttomnavigationbaritems_binding.dart';
-import '../modules/buttomnavigationbaritems/views/buttomnavigationbaritems_view.dart';
+
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 
@@ -12,7 +13,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.MAIN_SCREEN;
 
   static final routes = [
     GetPage(
@@ -26,9 +27,10 @@ class AppPages {
       binding: BookDetailsBinding(),
     ),
     GetPage(
-      name: _Paths.BUTTOMNAVIGATIONBARITEMS,
-      page: () => ButtomnavigationbaritemsView(),
-      binding: ButtomnavigationbaritemsBinding(),
+      name: _Paths.MAIN_SCREEN,
+      page: () => MainScreenView(),
+      binding: MainScreenBinding(),
     ),
+
   ];
 }

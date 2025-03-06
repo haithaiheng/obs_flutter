@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:obs/app/modules/buttomnavigationbaritems/views/buttomnavigationbaritems_view.dart';
 
 import 'package:obs/colors/constants.dart';
 
@@ -191,7 +190,6 @@ class HomeView extends GetView<HomeController> {
           );
         },
       ),
-      bottomNavigationBar: ButtomnavigationbaritemsView(),
     );
   }
 
@@ -264,12 +262,33 @@ class _cardBookViews extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ClipRRect(
+              clipBehavior: Clip.none,
               borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                '${book['thumbnail']}',
-                width: 180,
-                height: 200,
-                fit: BoxFit.cover,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Image.network(
+                    '${book['thumbnail']}',
+                    width: 180,
+                    height: 200,
+                    fit: BoxFit.cover,
+                  ),
+                  Positioned(
+                    right: -10,
+                    top: -10,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: HugeIcon(
+                          icon: HugeIcons.strokeRoundedFavourite,
+                          color: Colors.red,
+                          size: 24.0,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
             const SizedBox(height: 10),

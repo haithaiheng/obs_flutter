@@ -5,12 +5,14 @@ abstract class Routes {
   Routes._();
   static const HOME = _Paths.HOME;
   static const BOOK_DETAILS = _Paths.BOOK_DETAILS;
-  static const BUTTOMNAVIGATIONBARITEMS = _Paths.BUTTOMNAVIGATIONBARITEMS;
+  static const MAIN_SCREEN = _Paths.MAIN_SCREEN;
+
 }
 
 abstract class _Paths {
   _Paths._();
   static const HOME = '/home';
   static const BOOK_DETAILS = '/book-details';
-  static const BUTTOMNAVIGATIONBARITEMS = '/buttomnavigationbaritems';
+  static const MAIN_SCREEN = '/';
+
 }
