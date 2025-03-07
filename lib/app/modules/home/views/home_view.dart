@@ -203,10 +203,9 @@ class HomeView extends GetView<HomeController> {
             backgroundImage: AssetImage("assets/images/profiles.png"),
           ),
           const SizedBox(width: 10),
-          const Text(
-            "Hi!, Jonh",
+          Text(
+            "${'hello'.tr}!, Jonh",
             style: TextStyle(
-              fontFamily: "Poppins",
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -221,6 +220,61 @@ class HomeView extends GetView<HomeController> {
           },
           icon: HugeIcon(
             icon: HugeIcons.strokeRoundedSearch01,
+            color: dangerDark,
+            size: 24.0,
+          ),
+        ),
+        IconButton(
+          onPressed: () {
+            Get.defaultDialog(
+              title: 'change_lang'.tr,
+              barrierDismissible: false,
+              content: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            var locale = Locale('kh', 'KM');
+                            Get.updateLocale(locale);
+                            Get.back();
+                          },
+                          child: Text("khmer".tr)),
+                      Get.locale == Locale('kh', 'KM')
+                          ? Icon(
+                              Icons.check,
+                              size: 12,
+                            )
+                          : SizedBox(),
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            var locale = Locale('en', 'US');
+                            Get.updateLocale(locale);
+                            Get.back();
+                          },
+                          child: Text("english".tr)),
+                      Get.locale == Locale('en', 'US')
+                          ? Icon(
+                              Icons.check,
+                              size: 12,
+                            )
+                          : SizedBox(),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+          icon: Icon(
+            Icons.language,
             color: dangerDark,
             size: 24.0,
           ),
