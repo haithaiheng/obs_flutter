@@ -225,63 +225,6 @@ class HomeView extends GetView<HomeController> {
             size: 24.0,
           ),
         ),
-        IconButton(
-          onPressed: () {
-            Get.defaultDialog(
-              title: 'change_lang'.tr,
-              barrierDismissible: false,
-              content: Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            var locale = Locale('kh', 'KM');
-                            Get.updateLocale(locale);
-                            GetStorage().write('lang', 'kh');
-                            Get.back();
-                          },
-                          child: Text("khmer".tr)),
-                      Get.locale == Locale('kh', 'KM')
-                          ? Icon(
-                              Icons.check,
-                              size: 12,
-                            )
-                          : SizedBox(),
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            var locale = Locale('en', 'US');
-                            Get.updateLocale(locale);
-                            GetStorage().write('lang', 'en');
-                            Get.back();
-                          },
-                          child: Text("english".tr)),
-                      Get.locale == Locale('en', 'US')
-                          ? Icon(
-                              Icons.check,
-                              size: 12,
-                            )
-                          : SizedBox(),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          },
-          icon: Icon(
-            Icons.language,
-            color: dangerDark,
-            size: 24.0,
-          ),
-        ),
       ],
     );
   }
