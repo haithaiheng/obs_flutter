@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import 'package:obs/colors/constants.dart';
@@ -239,6 +240,7 @@ class HomeView extends GetView<HomeController> {
                           onPressed: () {
                             var locale = Locale('kh', 'KM');
                             Get.updateLocale(locale);
+                            GetStorage().write('lang', 'kh');
                             Get.back();
                           },
                           child: Text("khmer".tr)),
@@ -258,6 +260,7 @@ class HomeView extends GetView<HomeController> {
                           onPressed: () {
                             var locale = Locale('en', 'US');
                             Get.updateLocale(locale);
+                            GetStorage().write('lang', 'en');
                             Get.back();
                           },
                           child: Text("english".tr)),
