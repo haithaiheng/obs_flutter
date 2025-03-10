@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:obs/app/constants/app_constant.dart';
-import 'package:obs/app/modules/cart/views/cart_view.dart';
 import 'package:obs/app/modules/mainScreen/views/main_screen_view.dart';
 import 'package:obs/colors/constants.dart';
 
@@ -16,89 +15,106 @@ class ConfirmorderView extends GetView<ConfirmorderController> {
     var body = Get.arguments;
     return GetBuilder<ConfirmorderController>(
         init: ConfirmorderController(),
-        builder: (controler) => SafeArea(
-              child: Scaffold(
-                appBar: AppBar(
-                  title: Text('confirmorder'.tr),
-                  centerTitle: true,
-                ),
-                body: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: body['details'].length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        width: Get.width * 0.8,
-                        height: Get.height * 0.2,
-                        margin:
-                            const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Container(
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Image.network(
-                                    body['details'][index]['thumbnail'],
-                                    width: 100,
-                                    height: 150,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    margin: const EdgeInsets.only(left: 20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
+        builder: (controler) => Scaffold(
+              body: SafeArea(
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: IconButton(
+                          onPressed: () => Get.back(),
+                          icon: Icon(Icons.arrow_back_ios)),
+                      title: Text(
+                        'confirmorder'.tr,
+                        style: Theme.of(context).textTheme.headlineLarge,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: body['details'].length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            width: Get.width * 0.8,
+                            height: Get.height * 0.2,
+                            margin: const EdgeInsets.only(
+                                top: 10, left: 15, right: 15),
+                            child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Image.network(
+                                        body['details'][index]['thumbnail'],
+                                        width: 100,
+                                        height: 150,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        margin: const EdgeInsets.only(left: 20),
+                                        child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              body['details'][index]['title'],
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 3,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 18),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  body['details'][index]
+                                                      ['title'],
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 3,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headlineMedium,
+                                                ),
+                                                Text(
+                                                  body['details'][index]
+                                                      ['category'],
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .labelMedium,
+                                                ),
+                                              ],
                                             ),
                                             Text(
-                                              body['details'][index]
-                                                  ['category'],
-                                              style: TextStyle(fontSize: 14),
+                                              "\$${body['details'][index]['price']}",
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .labelLarge,
                                             ),
                                           ],
                                         ),
-                                        Text(
-                                          "\$${body['details'][index]['price']}",
-                                          style: TextStyle(
-                                              color: dangerDark,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18),
-                                        ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    }),
-                bottomNavigationBar: Container(
+                          );
+                        }),
+                  ],
+                ),
+              ),
+              bottomNavigationBar: SafeArea(
+                child: Container(
                   height: Get.height * 0.1,
                   padding: const EdgeInsets.all(20),
-                  color: AppColors.secondaryColor,
+                  // color: AppColors.secondaryColor,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,
@@ -110,6 +126,7 @@ class ConfirmorderView extends GetView<ConfirmorderController> {
                       Get.defaultDialog(
                         barrierDismissible: false,
                         title: 'scanhere'.tr,
+                        titleStyle: Theme.of(context).textTheme.headlineLarge,
                         content: controller.isLoading
                             ? Center(
                                 child: Image.network(
@@ -150,7 +167,12 @@ class ConfirmorderView extends GetView<ConfirmorderController> {
                                           onPressed: () {
                                             Get.offAll(MainScreenView());
                                           },
-                                          label: Text("ok".tr),
+                                          label: Text(
+                                            "ok".tr,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall,
+                                          ),
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor:
                                                 AppColors.primaryColor,
@@ -172,22 +194,9 @@ class ConfirmorderView extends GetView<ConfirmorderController> {
 
                       // controller.orderBook(body);
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.wallet,
-                          size: 16,
-                          color: secondaryColors,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "Pay Now",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    child: Text(
+                      "paynow".tr,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
                 ),

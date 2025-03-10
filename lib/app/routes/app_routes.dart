@@ -8,6 +8,7 @@ abstract class Routes {
   static const MAIN_SCREEN = _Paths.MAIN_SCREEN;
   static const MYBOOKS = _Paths.MYBOOKS;
   static const CONFIRMORDER = _Paths.CONFIRMORDER;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const MAIN_SCREEN = '/';
   static const MYBOOKS = '/mybooks';
   static const CONFIRMORDER = '/confirmorder';
+  static const PROFILE = '/profile';
 }

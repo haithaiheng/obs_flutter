@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:obs/app/constants/appLocale.dart';
+import 'package:obs/app/constants/appMode.dart';
 import 'package:obs/app/constants/app_constant.dart';
 import 'package:obs/app/modules/users/controllers/users_controller.dart';
 
@@ -24,10 +25,7 @@ Future<void> main() async {
             ? Locale('kh', 'KM')
             : Locale('en', 'US'),
         fallbackLocale: Locale('en', 'US'),
-        theme: ThemeData(
-            fontFamily: controller.lang.value == 'kh'
-                ? AppFonts.khmerFont
-                : AppFonts.englishFont),
+        theme: controller.isDarkmode.value ? darkTheme : lightTheme,
       ),
     ),
   );

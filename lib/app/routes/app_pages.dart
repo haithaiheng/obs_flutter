@@ -10,6 +10,8 @@ import '../modules/mainScreen/bindings/main_screen_binding.dart';
 import '../modules/mainScreen/views/main_screen_view.dart';
 import '../modules/mybooks/bindings/mybooks_binding.dart';
 import '../modules/mybooks/views/mybooks_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
 
 part 'app_routes.dart';
 
@@ -43,6 +45,11 @@ class AppPages {
       name: _Paths.CONFIRMORDER,
       page: () => const ConfirmorderView(),
       binding: ConfirmorderBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
     ),
   ];
 }
