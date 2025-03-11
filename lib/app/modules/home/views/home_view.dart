@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, prefer_const_constructors_in_immutables
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -125,6 +127,7 @@ class HomeView extends StatelessWidget {
 
 class _cardBookViews extends StatelessWidget {
   _cardBookViews({
+    // ignore: unused_element
     super.key,
     required this.book,
   });
