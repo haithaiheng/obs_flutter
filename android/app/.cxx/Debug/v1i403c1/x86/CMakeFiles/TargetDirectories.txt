@@ -1,0 +1,2 @@
+/Users/thaihenghai/Documents/Flutter & Dart/obs_flutter/android/app/.cxx/Debug/v1i403c1/x86/CMakeFiles/edit_cache.dir
+/Users/thaihenghai/Documents/Flutter & Dart/obs_flutter/android/app/.cxx/Debug/v1i403c1/x86/CMakeFiles/rebuild_cache.dir

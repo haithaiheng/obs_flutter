@@ -1,12 +1,17 @@
 import 'package:get/get.dart';
-import 'package:obs/app/modules/mainScreen/bindings/main_screen_binding.dart';
-import 'package:obs/app/modules/mainScreen/views/main_screen_view.dart';
 
 import '../modules/book_details/bindings/book_details_binding.dart';
 import '../modules/book_details/views/book_details_view.dart';
-
+import '../modules/confirmorder/bindings/confirmorder_binding.dart';
+import '../modules/confirmorder/views/confirmorder_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/mainScreen/bindings/main_screen_binding.dart';
+import '../modules/mainScreen/views/main_screen_view.dart';
+import '../modules/mybooks/bindings/mybooks_binding.dart';
+import '../modules/mybooks/views/mybooks_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
 
 part 'app_routes.dart';
 
@@ -31,6 +36,20 @@ class AppPages {
       page: () => MainScreenView(),
       binding: MainScreenBinding(),
     ),
-
+    GetPage(
+      name: _Paths.MYBOOKS,
+      page: () => const MybooksView(),
+      binding: MybooksBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONFIRMORDER,
+      page: () => const ConfirmorderView(),
+      binding: ConfirmorderBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
+    ),
   ];
 }

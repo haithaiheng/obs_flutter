@@ -97,10 +97,9 @@ class HomeView extends StatelessWidget {
             backgroundImage: AssetImage("assets/images/profiles.png"),
           ),
           const SizedBox(width: 10),
-          const Text(
-            "Hi!, Jonh", // Replace with dynamic name if available
+          Text(
+            "${'hello'.tr}!, Jonh",
             style: TextStyle(
-              fontFamily: "Poppins",
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),

@@ -31,7 +31,7 @@ class MainScreenView extends GetView<MainScreenController> {
           )),
       bottomNavigationBar: Obx(() {
         return BottomNavigationBar(
-          backgroundColor: Colors.white,
+          // backgroundColor: Colors.black,
           selectedItemColor: dangerDark,
           unselectedItemColor: darkColors,
           showUnselectedLabels: false,
