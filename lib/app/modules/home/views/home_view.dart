@@ -1,200 +1,95 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:hugeicons/hugeicons.dart';
-
+import 'package:obs/app/Models/category_model.dart';
 import 'package:obs/colors/constants.dart';
-
 import '../controllers/home_controller.dart';
 
-class HomeView extends GetView<HomeController> {
+class HomeView extends StatelessWidget {
   HomeView({super.key});
 
   final HomeController controller = Get.put(HomeController());
-
-  final List<Map<String, String>> category = [
-    {"id": "1", "name": "Electronics", "icon": "📱"},
-    {"id": "2", "name": "Fashion", "icon": "👗"},
-    {"id": "3", "name": "Home & Kitchen", "icon": "🏠"},
-    {"id": "4", "name": "Sports", "icon": "🏀"},
-    {"id": "5", "name": "Beauty", "icon": "💄"},
-    {"id": "6", "name": "Toys", "icon": "🧸"},
-    {"id": "7", "name": "Automotive", "icon": "🚗"},
-    {"id": "8", "name": "Books", "icon": "📚"},
-    {"id": "9", "name": "Music", "icon": "🎵"},
-    {"id": "10", "name": "Health & Personal Care", "icon": "💊"},
-  ];
-
-  final books = [
-    {
-      'id': 1,
-      'title': 'The Great Gatsby',
-      'author': 'F. Scott Fitzgerald',
-      'category': 'Classic',
-      'price': 10.99,
-      'rating': 4.5,
-      'description': 'A novel about the American dream set in the 1920s.',
-      'pdf_url': 'https://example.com/gatsby.pdf',
-      'thumbnail':
-          'https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg',
-      'created_at': '2025-03-01 10:00:00',
-      'updated_at': '2025-03-01 10:00:00',
-    },
-    {
-      'id': 2,
-      'title': '1984',
-      'author': 'George Orwell',
-      'category': 'Dystopian',
-      'price': 12.99,
-      'rating': 4.8,
-      'description': 'A chilling portrayal of a totalitarian society.',
-      'pdf_url': 'https://example.com/1984.pdf',
-      'thumbnail':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-TaNbD1XkuUCSRvZOBmHdUtbtqm-tAHScw&s',
-      'created_at': '2025-03-02 12:00:00',
-      'updated_at': '2025-03-02 12:00:00',
-    },
-    {
-      'id': 3,
-      'title': 'To Kill a Mockingbird',
-      'author': 'Harper Lee',
-      'category': 'Fiction',
-      'price': 8.99,
-      'rating': 4.7,
-      'description': 'A story of race and justice in the American South.',
-      'pdf_url': 'https://example.com/mockingbird.pdf',
-      'thumbnail':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5JbD66d7lgXFxVElNjRehV_F--q1zEnqcQA&s',
-      'created_at': '2025-03-03 14:00:00',
-      'updated_at': '2025-03-03 14:00:00',
-    },
-    {
-      'id': 4,
-      'title': 'The Catcher in the Rye',
-      'author': 'J.D. Salinger',
-      'category': 'Classic',
-      'price': 9.99,
-      'rating': 4.4,
-      'description': 'A novel about adolescent alienation and rebellion.',
-      'pdf_url': 'https://example.com/catcher.pdf',
-      'thumbnail':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDzSIq7dGokYdYmlJBRmFWfZojHx7LSqy1eA&s',
-      'created_at': '2025-03-04 16:00:00',
-      'updated_at': '2025-03-04 16:00:00',
-    },
-    {
-      'id': 5,
-      'title': 'Moby Dick',
-      'author': 'Herman Melville',
-      'category': 'Adventure',
-      'price': 11.99,
-      'rating': 4.3,
-      'description': 'The epic tale of the pursuit of the elusive white whale.',
-      'pdf_url': 'https://example.com/mobydick.pdf',
-      'thumbnail':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgA0kNyXUrmouVwSh7VZFWOhDnNnpr5dM0qg&s',
-      'created_at': '2025-03-05 18:00:00',
-      'updated_at': '2025-03-05 18:00:00',
-    },
-    {
-      'id': 6,
-      'title': 'The Hobbit',
-      'author': 'J.R.R. Tolkien',
-      'category': 'Fantasy',
-      'price': 14.99,
-      'rating': 4.9,
-      'description':
-          'The adventure of Bilbo Baggins, a hobbit who goes on an unexpected journey.',
-      'pdf_url': 'https://example.com/hobbit.pdf',
-      'thumbnail':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL9uJojKyuYXwKRcgIcYRFy1Np0_tg8DzhAly3zg1iG1IjTdCjOMRi82hCv17USV0YNzw&usqp=CAU',
-      'created_at': '2025-03-06 20:00:00',
-      'updated_at': '2025-03-06 20:00:00',
-    },
-    {
-      'id': 7,
-      'title': 'Pride and Prejudice',
-      'author': 'Jane Austen',
-      'category': 'Romance',
-      'price': 7.99,
-      'rating': 4.6,
-      'description': 'A classic novel about love, marriage, and society.',
-      'pdf_url': 'https://example.com/prideandprejudice.pdf',
-      'thumbnail':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA2cn6VYg1hFLbcaqFmWTmWTwKJSa3ZNBxCQ&s',
-      'created_at': '2025-03-07 22:00:00',
-      'updated_at': '2025-03-07 22:00:00',
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: secondaryColors,
       appBar: _appbar(),
-      body: ListView.builder(
-        itemCount: category.length,
-        itemBuilder: (context, index) {
-          final categs = category[index];
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 20, top: index == 0 ? 10 : 0),
-                child: Text(
-                  categs['name'].toString(),
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+      body: controller.obx(
+        (data) {
+          return ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              final categ = data[index];
+              final books = categ.books ?? [];
 
-              // List App
-              SizedBox(
-                height: 380,
-                width: double.infinity,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: books.length,
-                  itemBuilder: (context, index) {
-                    final book = books[index];
-                    return Padding(
-                      padding: EdgeInsets.only(
-                          right: index == books.length - 1 ? 20 : 0,
-                          left: 20,
-                          top: 10,
-                          bottom: 10),
-                      child: GestureDetector(
-                        onTap: () {
-                          // -------
-                          print("This is Cart: ${index}");
-
-                          if (book['id'] != null) {
-                            Get.toNamed('/book-details', arguments: {
-                              'id': book['id'],
-                              'title': book['title'],
-                            });
-                          } else {
-                            print("Book ID is null");
-                          }
-                        },
-                        child: _cardBookViews(book: book),
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: 20, top: index == 0 ? 10 : 0),
+                    child: Text(
+                      "${categ.name}",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
-                    );
-                  },
-                ),
-              ),
-            ],
+                    ),
+                  ),
+                  // List App
+                  SizedBox(
+                    height: 380,
+                    width: double.infinity,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: books.length,
+                      itemBuilder: (context, index) {
+                        final book = books[index];
+                        print("This is: ${book}");
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              right: index == books.length - 1 ? 20 : 0,
+                              left: 20,
+                              top: 10,
+                              bottom: 10),
+                          child: GestureDetector(
+                            onTap: () {
+                              // if (book['id'] != null) {
+                              //   Get.toNamed('/book-details', arguments: {
+                              //     'id': 1,
+                              //     'title': "KK",
+                              //   });
+                              // } else {
+                              //   print("Book ID is null");
+                              // }
+                            },
+                            child: _cardBookViews(book: book),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              );
+            },
           );
         },
+        onLoading: Center(
+          child: CircularProgressIndicator.adaptive(),
+        ),
+        onEmpty: Center(
+          child: Text("No data!"),
+        ),
+        onError: (erro) => Center(
+          child: Text(erro.toString()),
+        ),
       ),
     );
   }
 
-// Block Card
   _appbar() {
     return AppBar(
       title: Row(
@@ -210,14 +105,14 @@ class HomeView extends GetView<HomeController> {
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
-          )
+          ),
         ],
       ),
       centerTitle: true,
       actions: [
         IconButton(
           onPressed: () {
-            //
+            // Handle search action
           },
           icon: HugeIcon(
             icon: HugeIcons.strokeRoundedSearch01,
@@ -231,13 +126,13 @@ class HomeView extends GetView<HomeController> {
 }
 
 class _cardBookViews extends StatelessWidget {
-  const _cardBookViews({
+  _cardBookViews({
     // ignore: unused_element
     super.key,
     required this.book,
   });
 
-  final Map<String, Object> book;
+  final Books book;
 
   @override
   Widget build(BuildContext context) {
@@ -267,12 +162,12 @@ class _cardBookViews extends StatelessWidget {
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  Image.network(
-                    '${book['thumbnail']}',
-                    width: 180,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
+                  // Image.network(
+                  //   '${book['thumbnail']}',
+                  //   width: 180,
+                  //   height: 200,
+                  //   fit: BoxFit.cover,
+                  // ),
                   Positioned(
                     right: -10,
                     top: -10,
@@ -287,13 +182,13 @@ class _cardBookViews extends StatelessWidget {
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
             const SizedBox(height: 10),
             Text(
-              "${book['title']}",
+              "Title",
               style: const TextStyle(
                 fontFamily: "Poppins",
                 fontWeight: FontWeight.bold,
@@ -314,7 +209,7 @@ class _cardBookViews extends StatelessWidget {
                 const SizedBox(width: 5),
                 Expanded(
                   child: Text(
-                    book['author'].toString(),
+                    "Author",
                     style: TextStyle(
                         fontWeight: FontWeight.w800,
                         color: Colors.grey.shade600,
@@ -339,7 +234,7 @@ class _cardBookViews extends StatelessWidget {
                 const SizedBox(width: 5),
                 Expanded(
                   child: Text(
-                    book['category'].toString(),
+                    'cate',
                     style: TextStyle(
                         fontWeight: FontWeight.w800,
                         color: Colors.grey.shade600,
@@ -358,7 +253,7 @@ class _cardBookViews extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    '\$${book['price']}',
+                    '\$ price',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: dangerDark,
@@ -386,7 +281,7 @@ class _cardBookViews extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          "${book['rating']}",
+                          "racting",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
