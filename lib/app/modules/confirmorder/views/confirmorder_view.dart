@@ -36,6 +36,7 @@ class ConfirmorderView extends GetView<ConfirmorderController> {
                         shrinkWrap: true,
                         itemCount: body['details'].length,
                         itemBuilder: (context, index) {
+                          var book = body['details'];
                           return Container(
                             width: Get.width * 0.8,
                             height: Get.height * 0.2,
@@ -53,7 +54,7 @@ class ConfirmorderView extends GetView<ConfirmorderController> {
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: Image.network(
-                                        body['details'][index]['thumbnail'],
+                                        book[index]['thumbnail'],
                                         width: 100,
                                         height: 150,
                                         fit: BoxFit.cover,
@@ -73,8 +74,7 @@ class ConfirmorderView extends GetView<ConfirmorderController> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  body['details'][index]
-                                                      ['title'],
+                                                  book[index]['title'],
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   maxLines: 3,
@@ -83,8 +83,7 @@ class ConfirmorderView extends GetView<ConfirmorderController> {
                                                       .headlineMedium,
                                                 ),
                                                 Text(
-                                                  body['details'][index]
-                                                      ['category'],
+                                                  book[index]['category'],
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .labelMedium,
@@ -92,7 +91,7 @@ class ConfirmorderView extends GetView<ConfirmorderController> {
                                               ],
                                             ),
                                             Text(
-                                              "\$${body['details'][index]['price']}",
+                                              "\$${book[index]['price']}",
                                               style: Theme.of(context)
                                                   .primaryTextTheme
                                                   .labelLarge,
@@ -128,11 +127,25 @@ class ConfirmorderView extends GetView<ConfirmorderController> {
                         title: 'scanhere'.tr,
                         titleStyle: Theme.of(context).textTheme.headlineLarge,
                         content: controller.isLoading
-                            ? Center(
-                                child: Image.network(
-                                  "https://devithuotkeo.com/static/image/portfolio/khqr/khqr-7.png",
-                                  fit: BoxFit.cover,
-                                ),
+                            ? Column(
+                                children: [
+                                  Image.network(
+                                    "https://devithuotkeo.com/static/image/portfolio/khqr/khqr-7.png",
+                                    fit: BoxFit.cover,
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        var data = {
+                                          "userid": 1,
+                                          "date": DateTime.now().toString(),
+                                          "amount": body['amount'],
+                                          "transac": "20250312242305KJASKL",
+                                          "details": body['details']
+                                        };
+                                        controler.orderBook(data);
+                                      },
+                                      icon: Icon(Icons.check))
+                                ],
                               )
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,

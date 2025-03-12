@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:obs/app/modules/confirmorder/views/confirmorder_view.dart';
 import 'package:obs/colors/constants.dart';
@@ -20,9 +18,32 @@ class CartView extends GetView<CartController> {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                Text(
-                  'cart'.tr,
-                  style: Theme.of(context).textTheme.headlineLarge,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'cart'.tr,
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          var data = {
+                            "bookid": controller.num.value,
+                            "title": "Book Title",
+                            "category": "Fantasy",
+                            "price": 2.00,
+                            "thumbnail":
+                                "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg"
+                          };
+                          controller.addToCart(data);
+                        },
+                        icon: Icon(Icons.add)),
+                    IconButton(
+                        onPressed: () {
+                          controller.readCart();
+                        },
+                        icon: Icon(Icons.read_more)),
+                  ],
                 ),
                 const SizedBox(
                   height: 10,
@@ -30,8 +51,9 @@ class CartView extends GetView<CartController> {
                 ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: 2,
+                    itemCount: controller.cart.length,
                     itemBuilder: (context, index) {
+                      List<dynamic> bookList = controller.cart.value;
                       return Container(
                         width: Get.width * 0.8,
                         height: Get.height * 0.2,
@@ -49,7 +71,8 @@ class CartView extends GetView<CartController> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Image.network(
-                                    "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg",
+                                    // "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg",
+                                    bookList[index]['thumbnail'],
                                     width: 100,
                                     height: 150,
                                     fit: BoxFit.cover,
@@ -69,7 +92,7 @@ class CartView extends GetView<CartController> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "Bed Time Stories ssafasf safsfdafaa faf sfaasdfsaf asfasfsaf adasfaf",
+                                              "${bookList[index]['title'] + bookList[index]['bookid'].toString()}",
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 3,
                                               style: Theme.of(context)
@@ -77,7 +100,7 @@ class CartView extends GetView<CartController> {
                                                   .headlineMedium,
                                             ),
                                             Text(
-                                              "Poplar",
+                                              bookList[index]['category'],
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .labelMedium,
@@ -91,13 +114,29 @@ class CartView extends GetView<CartController> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              "\$20",
+                                              "\$${bookList[index]['price']}",
                                               style: Theme.of(context)
                                                   .primaryTextTheme
                                                   .labelLarge,
                                             ),
                                             IconButton(
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  Map<String, dynamic> data = {
+                                                    "bookid": bookList[index]
+                                                        ['bookid'],
+                                                    "title": bookList[index]
+                                                        ['title'],
+                                                    "category": bookList[index]
+                                                        ['category'],
+                                                    "price": bookList[index]
+                                                        ['price'],
+                                                    "thumbnail": bookList[index]
+                                                        ['thumbnail'],
+                                                    // "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg"
+                                                  };
+                                                  controller
+                                                      .removeCartItem(data);
+                                                },
                                                 icon: Icon(
                                                   Icons.delete,
                                                   // color: dangerDark,
@@ -134,7 +173,7 @@ class CartView extends GetView<CartController> {
                       width: 20,
                     ),
                     Text(
-                      "\$40.50",
+                      "\$${controller.total.value}",
                       style: Theme.of(context).primaryTextTheme.labelLarge,
                     ),
                   ],
@@ -151,34 +190,18 @@ class CartView extends GetView<CartController> {
                         )),
                     onPressed: () {
                       var body = {
-                        "userid": 1,
-                        "date": DateTime.now().toString(),
-                        "amount": 7.00,
-                        "transac": "242305KJASKL",
-                        "details": [
-                          {
-                            "bookid": 2,
-                            "title": "Bed Time Stories ssafasf safsfdafaa",
-                            "category": "Fantasy",
-                            "thumbnail":
-                                "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg",
-                            "price": 2.00,
-                            "amount": 2.00,
-                            "remark": "" //transction no after success
-                          },
-                          {
-                            "bookid": 3,
-                            "title": "Bed Time Stories ssafasf safsfdafaa",
-                            "category": "Fantasy",
-                            "thumbnail":
-                                "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg",
-                            "price": 5.00,
-                            "amount": 5.00,
-                            "remark": "" //transction no after success
-                          }
-                        ]
+                        "amount": controller.total.value,
+                        "details": controller.cart.value
                       };
-                      Get.to(ConfirmorderView(), arguments: body);
+                      if (body['details'].isBlank == true) {
+                        Get.defaultDialog(
+                          content: Text("Choose at least 1 item to check out"),
+                          textConfirm: "ok",
+                          onConfirm: () => Get.back(),
+                        );
+                      } else {
+                        Get.to(ConfirmorderView(), arguments: body);
+                      }
                     },
                     child: Text(
                       "checkout".tr,
