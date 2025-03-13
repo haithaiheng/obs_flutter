@@ -1,23 +1,37 @@
 PODS:
+  - BakongKHQR (1.0.0.15)
   - Flutter (1.0.0)
+  - khqr_sdk (1.0.0):
+    - BakongKHQR (~> 1.0.0.15)
+    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
 
 DEPENDENCIES:
+  - BakongKHQR (= 1.0.0.15)
   - Flutter (from `Flutter`)
+  - khqr_sdk (from `.symlinks/plugins/khqr_sdk/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+
+SPEC REPOS:
+  "https://sambo:ycfXmxxRbyzEmozY9z6n@gitlab.nbc.gov.kh/khqr/khqr-ios-pod.git":
+    - BakongKHQR
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  khqr_sdk:
+    :path: ".symlinks/plugins/khqr_sdk/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
 
 SPEC CHECKSUMS:
+  BakongKHQR: 6ade9d154b26056075c9b8bcc865ad7ca1652424
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  khqr_sdk: 9d6d79c83659a1874ac9060f4a563923f4225821
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
 
-PODFILE CHECKSUM: 4305caec6b40dde0ae97be1573c53de1882a07e5
+PODFILE CHECKSUM: 73f38b6b25d98508d988f6c43e8536b55a36e6eb
 
 COCOAPODS: 1.16.2

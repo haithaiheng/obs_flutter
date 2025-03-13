@@ -9,6 +9,7 @@ abstract class Routes {
   static const MYBOOKS = _Paths.MYBOOKS;
   static const CONFIRMORDER = _Paths.CONFIRMORDER;
   static const PROFILE = _Paths.PROFILE;
+  static const PAYWITHBAKONG = _Paths.PAYWITHBAKONG;
 }
 
 abstract class _Paths {
@@ -19,4 +20,5 @@ abstract class _Paths {
   static const MYBOOKS = '/mybooks';
   static const CONFIRMORDER = '/confirmorder';
   static const PROFILE = '/profile';
+  static const PAYWITHBAKONG = '/paywithbakong';
 }
