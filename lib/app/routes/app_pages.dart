@@ -10,6 +10,8 @@ import '../modules/mainScreen/bindings/main_screen_binding.dart';
 import '../modules/mainScreen/views/main_screen_view.dart';
 import '../modules/mybooks/bindings/mybooks_binding.dart';
 import '../modules/mybooks/views/mybooks_view.dart';
+import '../modules/paywithbakong/bindings/paywithbakong_binding.dart';
+import '../modules/paywithbakong/views/paywithbakong_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 
@@ -50,6 +52,11 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.PAYWITHBAKONG,
+      page: () => const PaywithbakongView(),
+      binding: PaywithbakongBinding(),
     ),
   ];
 }

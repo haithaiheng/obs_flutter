@@ -1,11 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:obs/app/constants/app_constant.dart';
-import 'package:obs/app/modules/mainScreen/views/main_screen_view.dart';
-import 'package:obs/colors/constants.dart';
-
+import 'package:obs/app/modules/paywithbakong/views/paywithbakong_view.dart';
 import '../controllers/confirmorder_controller.dart';
 
 class ConfirmorderView extends GetView<ConfirmorderController> {
@@ -113,7 +109,6 @@ class ConfirmorderView extends GetView<ConfirmorderController> {
                 child: Container(
                   height: Get.height * 0.1,
                   padding: const EdgeInsets.all(20),
-                  // color: AppColors.secondaryColor,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,
@@ -122,90 +117,7 @@ class ConfirmorderView extends GetView<ConfirmorderController> {
                             borderRadius: BorderRadius.circular(10),
                             side: BorderSide(color: AppColors.primaryColor))),
                     onPressed: () {
-                      Get.defaultDialog(
-                        barrierDismissible: false,
-                        title: 'scanhere'.tr,
-                        titleStyle: Theme.of(context).textTheme.headlineLarge,
-                        content: controller.isLoading
-                            ? Column(
-                                children: [
-                                  Image.network(
-                                    "https://devithuotkeo.com/static/image/portfolio/khqr/khqr-7.png",
-                                    fit: BoxFit.cover,
-                                  ),
-                                  IconButton(
-                                      onPressed: () {
-                                        var data = {
-                                          "userid": 1,
-                                          "date": DateTime.now().toString(),
-                                          "amount": body['amount'],
-                                          "transac": "20250312242305KJASKL",
-                                          "details": body['details']
-                                        };
-                                        controler.orderBook(data);
-                                      },
-                                      icon: Icon(Icons.check))
-                                ],
-                              )
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Icon(
-                                        CupertinoIcons.check_mark_circled,
-                                        size: 60,
-                                        color: Colors.green,
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        'success'.tr,
-                                        style: TextStyle(
-                                            fontFamily: AppFonts.khmerFont,
-                                            fontWeight: FontWeight.bold,
-                                            color: darkColors),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  controler.isLoading
-                                      ? SizedBox()
-                                      : ElevatedButton.icon(
-                                          onPressed: () {
-                                            Get.offAll(MainScreenView());
-                                          },
-                                          label: Text(
-                                            "ok".tr,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall,
-                                          ),
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                AppColors.primaryColor,
-                                            foregroundColor:
-                                                AppColors.secondaryColor,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              // side: BorderSide(
-                                              //   color: AppColors.primaryColor,
-                                            ),
-                                          ),
-                                        ),
-                                ],
-                              ),
-                        // textConfirm: controller.isLoading ? '' : 'ok'.tr,
-                        // onConfirm: () => controller.isLoading ? '' : Get.back(),
-                      );
-
-                      // controller.orderBook(body);
+                      Get.to(PaywithbakongView(), arguments: body);
                     },
                     child: Text(
                       "paynow".tr,
