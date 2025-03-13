@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 
 import 'package:get/get.dart';
@@ -58,9 +60,9 @@ class PaywithbakongController extends GetxController {
       // print("khqrData: $khqrData");
       final isValid = await _khqrSdk.verify(khqrData!.qr);
       if (isValid) {
-        _qrCode.value = khqrData!.qr;
-        _md5.value = khqrData!.md5;
-        print("md5: ${khqrData!.md5}");
+        _qrCode.value = khqrData.qr;
+        _md5.value = khqrData.md5;
+        print("md5: ${khqrData.md5}");
         update();
       }
     } catch (e) {
