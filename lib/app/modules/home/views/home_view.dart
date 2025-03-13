@@ -3,108 +3,146 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:obs/app/Models/category_model.dart';
+import 'package:obs/app/constants/app_constant.dart';
+import 'package:obs/app/modules/users/controllers/users_controller.dart';
+
 import 'package:obs/colors/constants.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
 
-  final HomeController controller = Get.put(HomeController());
+  final HomeController _controller = Get.put(HomeController());
+  final UsersController _usersController = Get.put(UsersController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: secondaryColors,
+      backgroundColor: _usersController.isDarkmode.value
+          ? darkColors
+          : AppColors.secondaryColor,
       appBar: _appbar(),
-      body: controller.obx(
-        (data) {
-          return ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (context, index) {
-              final categ = data[index];
-              final books = categ.books ?? [];
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsets.only(left: 20, top: index == 0 ? 10 : 0),
-                    child: Text(
-                      "${categ.name}",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+      extendBody: true,
+      body: Obx(() {
+        if (_controller.isLoading.value) {
+          return Center(child: CircularProgressIndicator.adaptive());
+        }
+        if (_controller.isError.isNotEmpty) {
+          return Center(child: Text("${_controller.isError}"));
+        }
+        if (_controller.categories.isEmpty) {
+          return Center(child: Text("Data not found"));
+        }
+        return ListView.builder(
+          itemCount: _controller.categories.length,
+          itemBuilder: (context, index) {
+            final data = _controller.categories[index];
+            final books = data['books'];
+            final category = data['categories'];
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 20, top: index == 0 ? 10 : 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "${category['cate_title' ?? 'Null Value']}",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: _usersController.isDarkmode.value
+                              ? AppColors.lightcardColor
+                              : AppColors.thirdColor,
+                        ),
                       ),
-                    ),
-                  ),
-                  // List App
-                  SizedBox(
-                    height: 380,
-                    width: double.infinity,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: books.length,
-                      itemBuilder: (context, index) {
-                        final book = books[index];
-                        print("This is: ${book}");
-                        return Padding(
-                          padding: EdgeInsets.only(
-                              right: index == books.length - 1 ? 20 : 0,
-                              left: 20,
-                              top: 10,
-                              bottom: 10),
-                          child: GestureDetector(
-                            onTap: () {
-                              // if (book['id'] != null) {
-                              //   Get.toNamed('/book-details', arguments: {
-                              //     'id': 1,
-                              //     'title': "KK",
-                              //   });
-                              // } else {
-                              //   print("Book ID is null");
-                              // }
-                            },
-                            child: _cardBookViews(book: book),
+                      TextButton(
+                        onPressed: () {
+                          print("${category}");
+                          if (category != null) {
+                            Get.toNamed('/categories-details', arguments: {
+                              'catege_title': category['cate_title'],
+                              'books': books,
+                            });
+                          } else {
+                            Get.snackbar("Error", "Null Categories!");
+                          }
+                        },
+                        child: Text(
+                          "See More",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            color: AppColors.primaryColor,
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              );
-            },
-          );
-        },
-        onLoading: Center(
-          child: CircularProgressIndicator.adaptive(),
-        ),
-        onEmpty: Center(
-          child: Text("No data!"),
-        ),
-        onError: (erro) => Center(
-          child: Text(erro.toString()),
-        ),
-      ),
+                ),
+                // List App
+                SizedBox(
+                  height: 380,
+                  width: double.infinity,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: books.length,
+                    itemBuilder: (context, index) {
+                      final book = books[index];
+
+                      return Padding(
+                        padding: EdgeInsets.only(
+                            right: index == books.length - 1 ? 20 : 0,
+                            left: 20,
+                            top: 10,
+                            bottom: 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            if (book['book_id'] != null) {
+                              Get.toNamed('/book-details', arguments: {
+                                'id': category['cate_id'],
+                                'title': category['cate_title'],
+                              });
+                            } else {
+                              print("Book ID is null");
+                            }
+                          },
+                          child: _cardBookViews(book, category['cate_title']),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      }),
     );
   }
 
   _appbar() {
     return AppBar(
+      forceMaterialTransparency: true,
+      elevation: 0.9,
+      backgroundColor: _usersController.isDarkmode.value
+          ? AppColors.darkcardColor
+          : AppColors.lightcardColor,
       title: Row(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 20,
-            backgroundImage: AssetImage("assets/images/profiles.png"),
+            backgroundImage: const AssetImage("assets/images/profiles.png"),
           ),
           const SizedBox(width: 10),
           Text(
             "${'hello'.tr}!, Jonh",
             style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: _usersController.isDarkmode.value
+                    ? AppColors.lightcardColor
+                    : AppColors.thirdColor),
           ),
         ],
       ),
@@ -123,23 +161,14 @@ class HomeView extends StatelessWidget {
       ],
     );
   }
-}
 
-class _cardBookViews extends StatelessWidget {
-  _cardBookViews({
-    // ignore: unused_element
-    super.key,
-    required this.book,
-  });
-
-  final Books book;
-
-  @override
-  Widget build(BuildContext context) {
+  _cardBookViews(book, category) {
     return Container(
       width: 180,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: _usersController.isDarkmode.value
+            ? AppColors.darkcardColor
+            : Colors.white,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -162,17 +191,23 @@ class _cardBookViews extends StatelessWidget {
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  // Image.network(
-                  //   '${book['thumbnail']}',
-                  //   width: 180,
-                  //   height: 200,
-                  //   fit: BoxFit.cover,
-                  // ),
+                  Container(
+                    width: double.infinity,
+                    height: 210,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                          image: NetworkImage('${book['book_thumbnail']}'),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
                   Positioned(
                     right: -10,
                     top: -10,
                     child: CircleAvatar(
-                      backgroundColor: Colors.white,
+                      backgroundColor: _usersController.isDarkmode.value
+                          ? AppColors.darkcardColor
+                          : Colors.white,
                       child: IconButton(
                         onPressed: () {},
                         icon: HugeIcon(
@@ -188,10 +223,13 @@ class _cardBookViews extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              "Title",
-              style: const TextStyle(
+              "${book['book_title']}",
+              style: TextStyle(
                 fontFamily: "Poppins",
                 fontWeight: FontWeight.bold,
+                color: _usersController.isDarkmode.value
+                    ? Colors.white
+                    : AppColors.darkcardColor,
               ),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
@@ -234,7 +272,7 @@ class _cardBookViews extends StatelessWidget {
                 const SizedBox(width: 5),
                 Expanded(
                   child: Text(
-                    'cate',
+                    '${category}',
                     style: TextStyle(
                         fontWeight: FontWeight.w800,
                         color: Colors.grey.shade600,
@@ -253,7 +291,7 @@ class _cardBookViews extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    '\$ price',
+                    '\$ ${book['book_price' ?? 0]}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: dangerDark,
@@ -281,9 +319,10 @@ class _cardBookViews extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          "racting",
+                          "${book['rating'] ?? 0}",
                           style: TextStyle(
                             color: Colors.white,
+                            fontFamily: 'Poppins',
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
