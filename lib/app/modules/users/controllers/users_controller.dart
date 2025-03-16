@@ -31,7 +31,7 @@ class UsersController extends GetxController {
   }
 
   void readLanguage() {
-    lang.value = storage.read('lang');
+    lang(storage.read('lang')) ;
     update();
   }
 
@@ -42,7 +42,7 @@ class UsersController extends GetxController {
   }
 
   void readMode() {
-    isDarkmode.value = storage.read('mode');
+    isDarkmode(storage.read('mode'));
     update();
   }
 }

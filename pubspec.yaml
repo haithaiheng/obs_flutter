@@ -41,6 +41,10 @@ dependencies:
   badges: ^3.1.2
   get_storage: ^2.0.3
   khqr_sdk: ^1.0.4
+  dio: ^5.8.0+1
+  syncfusion_flutter_pdfviewer: ^28.2.11
+  flutter_pdfview: ^1.4.0
+
 
 dev_dependencies:
   flutter_test:
@@ -81,16 +85,16 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-     - family: KantumruyPro
-       fonts:
-         - asset: assets/fonts/Kantumruy_Pro/static/KantumruyPro-Regular.ttf
-         - asset: assets/fonts/Kantumruy_Pro/static/KantumruyPro-Italic.ttf
-           style: italic
-     - family: Poppins
-       fonts:
-         - asset: assets/fonts/Poppins/Poppins-Regular.ttf
-         - asset: assets/fonts/Poppins/Poppins-Italic.ttf
-           style: italic
+    - family: KantumruyPro
+      fonts:
+        - asset: assets/fonts/Kantumruy_Pro/static/KantumruyPro-Regular.ttf
+        - asset: assets/fonts/Kantumruy_Pro/static/KantumruyPro-Italic.ttf
+          style: italic
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins/Poppins-Italic.ttf
+          style: italic
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

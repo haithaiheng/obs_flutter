@@ -8,7 +8,7 @@ import '../controllers/cart_controller.dart';
 class CartView extends GetView<CartController> {
   const CartView({super.key});
 
-  // final cartController = Get.put(CartController());
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CartController>(

@@ -3,6 +3,7 @@ part of 'app_pages.dart';
 
 abstract class Routes {
   Routes._();
+
   static const HOME = _Paths.HOME;
   static const BOOK_DETAILS = _Paths.BOOK_DETAILS;
   static const MAIN_SCREEN = _Paths.MAIN_SCREEN;
@@ -10,10 +11,14 @@ abstract class Routes {
   static const CONFIRMORDER = _Paths.CONFIRMORDER;
   static const PROFILE = _Paths.PROFILE;
   static const PAYWITHBAKONG = _Paths.PAYWITHBAKONG;
+  static const CATEGORIES_DETAILS = _Paths.CATEGORIES_DETAILS;
+  static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;
+  static const PDF_VIEWERS = _Paths.PDF_VIEWERS;
 }
 
 abstract class _Paths {
   _Paths._();
+
   static const HOME = '/home';
   static const BOOK_DETAILS = '/book-details';
   static const MAIN_SCREEN = '/';
@@ -21,4 +26,7 @@ abstract class _Paths {
   static const CONFIRMORDER = '/confirmorder';
   static const PROFILE = '/profile';
   static const PAYWITHBAKONG = '/paywithbakong';
+  static const CATEGORIES_DETAILS = '/categories-details';
+  static const SPLASH_SCREEN = '/splash-screen';
+  static const PDF_VIEWERS = '/pdf-viewers';
 }

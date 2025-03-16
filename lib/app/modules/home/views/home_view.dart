@@ -1,9 +1,11 @@
-// ignore_for_file: camel_case_types, prefer_const_constructors_in_immutables
+// ignore_for_file: camel_case_types, prefer_const_constructors_in_immutables, unused_element_parameter, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:obs/app/constants/app_constant.dart';
+import 'package:obs/app/constants/loading_widget.dart';
 import 'package:obs/app/modules/users/controllers/users_controller.dart';
 
 import 'package:obs/colors/constants.dart';
@@ -15,6 +17,9 @@ class HomeView extends StatelessWidget {
   final HomeController _controller = Get.put(HomeController());
   final UsersController _usersController = Get.put(UsersController());
 
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,101 +28,70 @@ class HomeView extends StatelessWidget {
           : AppColors.secondaryColor,
       appBar: _appbar(),
       extendBody: true,
-      body: Obx(() {
-        if (_controller.isLoading.value) {
-          return Center(child: CircularProgressIndicator.adaptive());
-        }
-        if (_controller.isError.isNotEmpty) {
-          return Center(child: Text("${_controller.isError}"));
-        }
-        if (_controller.categories.isEmpty) {
-          return Center(child: Text("Data not found"));
-        }
-        return ListView.builder(
-          itemCount: _controller.categories.length,
-          itemBuilder: (context, index) {
-            final data = _controller.categories[index];
-            final books = data['books'];
-            final category = data['categories'];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 20, top: index == 0 ? 10 : 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "${category['cate_title' ?? 'Null Value']}",
+      body: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: () async {
+          return Future<void>.delayed(const Duration(seconds: 2), () {
+            _controller.getCategory();
+          });
+        },
+        child: Obx(() {
+          if (_controller.isLoading.value) {
+            return LoadingWidget();
+          }
+          if (_controller.isError.isNotEmpty) {
+            return Padding(
+              padding: const EdgeInsets.all(20),
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "${_controller.isError}",
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontFamily: AppFonts.englishFont,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        _controller.getCategory();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        backgroundColor: _usersController.isDarkmode.value
+                            ? AppColors.darkcardColor
+                            : AppColors.secondaryColor,
+                      ),
+                      child: Text(
+                        "Refresh Page",
                         style: TextStyle(
-                          fontSize: 18,
+                          fontFamily: AppFonts.englishFont,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: _usersController.isDarkmode.value
-                              ? AppColors.lightcardColor
-                              : AppColors.thirdColor,
+                          color: AppColors.primaryColor,
                         ),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          print("${category}");
-                          if (category != null) {
-                            Get.toNamed('/categories-details', arguments: {
-                              'catege_title': category['cate_title'],
-                              'books': books,
-                            });
-                          } else {
-                            Get.snackbar("Error", "Null Categories!");
-                          }
-                        },
-                        child: Text(
-                          "See More",
-                          style: TextStyle(
-                            fontFamily: "Poppins",
-                            color: AppColors.primaryColor,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                // List App
-                SizedBox(
-                  height: 380,
-                  width: double.infinity,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: books.length,
-                    itemBuilder: (context, index) {
-                      final book = books[index];
-
-                      return Padding(
-                        padding: EdgeInsets.only(
-                            right: index == books.length - 1 ? 20 : 0,
-                            left: 20,
-                            top: 10,
-                            bottom: 10),
-                        child: GestureDetector(
-                          onTap: () {
-                            if (book['book_id'] != null) {
-                              Get.toNamed('/book-details', arguments: {
-                                'id': category['cate_id'],
-                                'title': category['cate_title'],
-                              });
-                            } else {
-                              print("Book ID is null");
-                            }
-                          },
-                          child: _cardBookViews(book, category['cate_title']),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
+              ),
             );
-          },
-        );
-      }),
+          }
+          if (_controller.categories.isEmpty) {
+            return Center(child: Text("Data not found"));
+          }
+          return _buildContent();
+        }),
+      ),
     );
   }
 
@@ -162,7 +136,94 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  _cardBookViews(book, category) {
+  Widget _buildContent() {
+    return ListView.builder(
+      itemCount: _controller.categories.length,
+      itemBuilder: (context, index) {
+        final data = _controller.categories[index];
+        final books = data['books'];
+        final category = data['categories'];
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 20, top: index == 0 ? 10 : 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "${category['cate_title']}",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: _usersController.isDarkmode.value
+                          ? AppColors.lightcardColor
+                          : AppColors.thirdColor,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (category != null) {
+                        Get.toNamed('/categories-details', arguments: {
+                          'cate_title': category['cate_title'],
+                          'cate_id': category['cate_id'],
+                          'books': books,
+                        });
+                      } else {
+                        Get.snackbar("Error", "Null Categories!");
+                      }
+                    },
+                    child: Text(
+                      "See More",
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // List App
+            SizedBox(
+              height: 380,
+              width: double.infinity,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: books.length,
+                itemBuilder: (context, index) {
+                  final book = books[index];
+
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        right: index == books.length - 1 ? 20 : 0,
+                        left: 20,
+                        top: 10,
+                        bottom: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        if (book['book_id'] != null) {
+                          final bookId = book['book_id'];
+                          print("This is ID for find book : ${bookId}");
+                          Get.toNamed('/book-details', arguments: {
+                            'id': bookId,
+                            'title': book['book_title'],
+                          });
+                        }
+                      },
+                      child: _cardBookViews(book, category['cate_title']),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _cardBookViews(book, category) {
     return Container(
       width: 180,
       decoration: BoxDecoration(
@@ -272,7 +333,7 @@ class HomeView extends StatelessWidget {
                 const SizedBox(width: 5),
                 Expanded(
                   child: Text(
-                    '${category}',
+                    '$category',
                     style: TextStyle(
                         fontWeight: FontWeight.w800,
                         color: Colors.grey.shade600,
@@ -291,7 +352,7 @@ class HomeView extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    '\$ ${book['book_price' ?? 0]}',
+                    '\$ ${book['book_price']}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: dangerDark,

@@ -8,6 +8,7 @@ import '../controllers/users_controller.dart';
 
 class UsersView extends GetView<UsersController> {
   const UsersView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<UsersController>(
@@ -25,7 +26,6 @@ class UsersView extends GetView<UsersController> {
                   children: [
                     Container(
                       width: Get.width,
-                      height: Get.height * 0.18,
                       padding: const EdgeInsets.all(20),
                       margin: const EdgeInsets.all(15),
                       decoration: BoxDecoration(

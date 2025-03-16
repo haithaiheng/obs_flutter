@@ -1,33 +1,61 @@
-import 'package:flutter/cupertino.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:obs/app/Models/category_model.dart';
-import 'package:obs/app/modules/providers/category_provider.dart';
+import 'package:obs/app/constants/application.dart';
 
-class HomeController extends GetxController with StateMixin {
-  final isAppbar = false.obs;
+class HomeController extends GetxController {
+  final _dio = Dio();
+  final url = application.apiBaseUrl;
+
   final searchs = TextEditingController();
-  final count = 0.obs;
-  var isLoading = true.obs;
-  var isError = false.obs;
-  var categories = <CategoriesModel>[].obs;
 
-  void increment() => count.value++;
-  void toggleBarSearch() => isAppbar.toggle();
+  var isLoading = false.obs;
+  var isError = "".obs;
+
+  RxList categories = RxList([]);
 
   @override
   void onInit() {
     super.onInit();
-    CategoryProvider().getCategories().then((response) {
-      change(response, status: RxStatus.success());
-    }, onError: (err) {
-      change(null, status: RxStatus.error(err.toString()));
-    });
+    getCategory();
   }
 
   @override
   void onClose() {
-    super.onClose();
     searchs.dispose();
+    super.onClose();
+  }
+
+  void getCategory() async {
+    isLoading(true);
+    isError("");
+
+    try {
+      final response = await _dio.get('${url}home');
+
+      if (response.data is Map<String, dynamic> &&
+          response.data.containsKey("data")) {
+        var dataList = response.data["data"];
+
+        categories.value = dataList;
+      } else {
+        isError(
+            "Error: Response does not contain 'data' key or is not a valid map.");
+        debugPrint(
+            "Error: Response does not contain 'data' key or is not a valid map.");
+      }
+    } catch (e) {
+      debugPrint('Error fetching categories: $e');
+      isError("Server is not response!");
+      Get.snackbar(
+        "Error",
+        e.toString(),
+        colorText: Colors.white,
+        backgroundColor: Colors.red, // Use your `dangerDark` color here
+      );
+    } finally {
+      isLoading(false);
+    }
   }
 }

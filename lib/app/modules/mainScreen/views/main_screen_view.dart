@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:obs/app/modules/users/controllers/users_controller.dart';
 import 'package:obs/colors/constants.dart';
 import 'package:obs/colors/svgIcon.dart';
 
@@ -13,24 +14,15 @@ class MainScreenView extends GetView<MainScreenController> {
   MainScreenView({super.key});
 
   final mainScreenController = Get.put(MainScreenController());
-
+  final _userController = Get.put(UsersController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(() => AnimatedSwitcher(
-            duration: Duration(milliseconds: 300),
-            transitionBuilder: (child, animation) => SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(1, 0), // Start from the right
-                end: Offset.zero, // Move to the center
-              ).animate(animation),
-              child: child,
-            ),
-            child: mainScreenController
-                .pages[mainScreenController.isSelectIndex.value],
-          )),
+      body: Obx(() => mainScreenController
+          .pages[mainScreenController.isSelectIndex.value]),
       bottomNavigationBar: Obx(() {
         return BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           // backgroundColor: Colors.black,
           selectedItemColor: dangerDark,
           unselectedItemColor: darkColors,
