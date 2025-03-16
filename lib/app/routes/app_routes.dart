@@ -14,6 +14,7 @@ abstract class Routes {
   static const CATEGORIES_DETAILS = _Paths.CATEGORIES_DETAILS;
   static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;
   static const PDF_VIEWERS = _Paths.PDF_VIEWERS;
+  static const BOOK = _Paths.BOOK;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const CATEGORIES_DETAILS = '/categories-details';
   static const SPLASH_SCREEN = '/splash-screen';
   static const PDF_VIEWERS = '/pdf-viewers';
+  static const BOOK = '/book';
 }

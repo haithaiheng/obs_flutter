@@ -38,6 +38,12 @@ class Messages extends Translations {
           'lastname': 'Lastname',
           'optional': 'Optional',
           'saving': 'Saving',
+          'scantopay': "Scan to Pay",
+          'blankcart': "Blank cart can't check out.",
+          'bookview': 'Book View',
+          'topage': 'Go to page',
+          'page': 'Page',
+          'blankpage': 'Can not be blank',
         },
         'kh_KM': {
           'hello': 'សួស្តី',
@@ -72,6 +78,12 @@ class Messages extends Translations {
           'lastname': 'នាម',
           'optional': 'មិនតម្រូវ',
           'saving': 'កំពុងរក្សាទុក',
+          'scantopay': "ស្កេនដើម្បីបង់ប្រាក់",
+          'blankcart': "កន្ត្រកទំនេរ",
+          'bookview': 'មើលសៀវភៅ',
+          'topage': 'ឆ្ពោះទៅទំព័រ',
+          'page': 'ទំព័រ',
+          'blankpage': 'មិនអាចទំនេរ',
         }
       };
 }

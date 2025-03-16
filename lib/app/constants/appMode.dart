@@ -15,10 +15,21 @@ ThemeData darkTheme = ThemeData(
     selectedItemColor: AppColors.secondaryColor,
     unselectedItemColor: AppColors.primaryColor,
   ),
+  primaryIconTheme: IconThemeData(
+    color: AppColors.primaryColor,
+    size: 18,
+  ),
   iconTheme: IconThemeData(
     color: AppColors.priceColor,
     size: 18,
   ),
+  appBarTheme: AppBarTheme(
+      backgroundColor: AppColors.thirdColor,
+      centerTitle: true,
+      iconTheme: IconThemeData(
+        color: AppColors.priceColor,
+      )),
+  dialogBackgroundColor: AppColors.darkcardColor,
   dialogTheme: DialogThemeData(
     backgroundColor: AppColors.darkcardColor,
   ),
@@ -46,8 +57,13 @@ ThemeData darkTheme = ThemeData(
         fontSize: 18,
         color: AppColors.secondaryColor,
         fontWeight: FontWeight.w700),
+    //label for dialog
+    labelLarge: TextStyle(
+      fontSize: 14,
+      color: AppColors.secondaryColor,
+    ),
     labelMedium: TextStyle(
-      fontSize: 16,
+      fontSize: 14,
       color: AppColors.secondaryColor,
     ),
     labelSmall: TextStyle(
@@ -65,10 +81,16 @@ ThemeData lightTheme = ThemeData(
     selectedItemColor: AppColors.primaryColor,
     unselectedItemColor: AppColors.secondaryColor,
   ),
+  primaryIconTheme: IconThemeData(
+    color: AppColors.primaryColor,
+    size: 18,
+  ),
   iconTheme: IconThemeData(
     color: AppColors.primaryColor,
     size: 18,
   ),
+  appBarTheme: AppBarTheme(backgroundColor: AppColors.secondaryColor),
+  dialogBackgroundColor: AppColors.secondaryColor,
   dialogTheme: DialogThemeData(
     backgroundColor: AppColors.secondaryColor,
   ),
@@ -84,17 +106,28 @@ ThemeData lightTheme = ThemeData(
     ),
   ),
   textTheme: TextTheme(
+    //title of each screen
     headlineLarge: TextStyle(
         fontSize: 24, color: AppColors.thirdColor, fontWeight: FontWeight.w900),
     headlineMedium: TextStyle(
         fontSize: 20, color: AppColors.thirdColor, fontWeight: FontWeight.w700),
+    //for button label
     headlineSmall: TextStyle(
         fontSize: 18,
         color: AppColors.secondaryColor,
         fontWeight: FontWeight.w700),
+    //label for dialog
+    labelLarge: TextStyle(
+      fontSize: 14,
+      color: AppColors.thirdColor,
+    ),
     labelMedium: TextStyle(
-      fontSize: 16,
-      color: AppColors.secondaryColor,
+      fontSize: 14,
+      color: AppColors.thirdColor,
+    ),
+    labelSmall: TextStyle(
+      fontSize: 14,
+      color: AppColors.thirdColor,
     ),
   ),
 );

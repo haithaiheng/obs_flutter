@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:obs/app/modules/cart/controllers/cart_controller.dart';
 import 'package:obs/app/modules/cart/views/cart_view.dart';
 import 'package:obs/app/modules/home/views/home_view.dart';
 import 'package:obs/app/modules/users/views/users_view.dart';
@@ -10,6 +14,8 @@ class MainScreenController extends GetxController {
   final count = 0.obs;
 
   var isSelectIndex = 0.obs;
+  final cartController = Get.put(CartController());
+  RxInt get num => cartController.num;
 
   final List pages = [
     HomeView(),
@@ -25,6 +31,7 @@ class MainScreenController extends GetxController {
 
   @override
   void onReady() {
+    cartController.checkCart();
     super.onReady();
   }
 
@@ -32,6 +39,4 @@ class MainScreenController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

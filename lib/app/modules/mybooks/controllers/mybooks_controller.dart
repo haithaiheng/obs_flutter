@@ -1,9 +1,13 @@
 import 'package:get/get.dart';
+import 'package:obs/app/modules/mybooks/providers/mybook_provider.dart';
 
 class MybooksController extends GetxController {
   //TODO: Implement MybooksController
 
-  final count = 0.obs;
+  final provider = Get.put(MybookProvider());
+  final RxList _list = [].obs;
+  RxList get list => _list;
+
   @override
   void onInit() {
     super.onInit();
@@ -11,6 +15,7 @@ class MybooksController extends GetxController {
 
   @override
   void onReady() {
+    fetchMybooks();
     super.onReady();
   }
 
@@ -19,5 +24,14 @@ class MybooksController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+  Future<dynamic> fetchMybooks() async {
+    provider.fetchMybook().then((value) {
+      if (value.length > 0) {
+        _list.value = value;
+        update();
+      } else {
+        Get.snackbar("message", value);
+      }
+    });
+  }
 }

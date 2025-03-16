@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/book/bindings/book_binding.dart';
+import '../modules/book/views/book_view.dart';
 import '../modules/book_details/bindings/book_details_binding.dart';
 import '../modules/book_details/views/book_details_view.dart';
 import '../modules/categories_details/bindings/categories_details_binding.dart';
@@ -78,6 +80,11 @@ class AppPages {
       name: _Paths.PDF_VIEWERS,
       page: () => PdfViewersView(),
       binding: PdfViewersBinding(),
+    ),
+    GetPage(
+      name: _Paths.BOOK,
+      page: () => const BookView(),
+      binding: BookBinding(),
     ),
   ];
 }

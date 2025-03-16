@@ -15,146 +15,135 @@ class CartView extends GetView<CartController> {
       init: CartController(),
       builder: (controller) => SafeArea(
         child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'cart'.tr,
+              style: Theme.of(context).textTheme.headlineLarge,
+            ),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    var data = {
+                      "bookid": controller.num.value,
+                      "title": "Book Title",
+                      "category": "Fantasy",
+                      "price": 2.00,
+                      "thumbnail":
+                          "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg"
+                    };
+                    controller.addToCart(data);
+                  },
+                  icon: Icon(Icons.add)),
+              IconButton(
+                  onPressed: () {
+                    controller.readCart();
+                  },
+                  icon: Icon(Icons.read_more)),
+            ],
+          ),
           body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      'cart'.tr,
-                      style: Theme.of(context).textTheme.headlineLarge,
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          var data = {
-                            "bookid": controller.num.value,
-                            "title": "Book Title",
-                            "category": "Fantasy",
-                            "price": 2.00,
-                            "thumbnail":
-                                "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg"
-                          };
-                          controller.addToCart(data);
-                        },
-                        icon: Icon(Icons.add)),
-                    IconButton(
-                        onPressed: () {
-                          controller.readCart();
-                        },
-                        icon: Icon(Icons.read_more)),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: controller.cart.length,
-                    itemBuilder: (context, index) {
-                      List<dynamic> bookList = controller.cart.value;
-                      return Container(
-                        width: Get.width * 0.8,
-                        height: Get.height * 0.2,
-                        margin:
-                            const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Container(
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Image.network(
-                                    // "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg",
-                                    bookList[index]['thumbnail'],
-                                    width: 100,
-                                    height: 150,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    margin: const EdgeInsets.only(left: 20),
-                                    child: Column(
+            child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: controller.cart.length,
+                itemBuilder: (context, index) {
+                  List<dynamic> bookList = controller.cart.value;
+                  return Container(
+                    width: Get.width * 0.8,
+                    height: Get.height * 0.17,
+                    margin: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Image.network(
+                                // "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg",
+                                bookList[index]['thumbnail'],
+                                width: 100,
+                                height: 150,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                margin: const EdgeInsets.only(left: 20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "${bookList[index]['title'] + bookList[index]['bookid'].toString()}",
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 3,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headlineMedium,
-                                            ),
-                                            Text(
-                                              bookList[index]['category'],
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelMedium,
-                                            ),
-                                          ],
+                                        Text(
+                                          "${bookList[index]['title'] + bookList[index]['bookid'].toString()}",
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 3,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineMedium,
                                         ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "\$${bookList[index]['price']}",
-                                              style: Theme.of(context)
-                                                  .primaryTextTheme
-                                                  .labelLarge,
-                                            ),
-                                            IconButton(
-                                                onPressed: () {
-                                                  Map<String, dynamic> data = {
-                                                    "bookid": bookList[index]
-                                                        ['bookid'],
-                                                    "title": bookList[index]
-                                                        ['title'],
-                                                    "category": bookList[index]
-                                                        ['category'],
-                                                    "price": bookList[index]
-                                                        ['price'],
-                                                    "thumbnail": bookList[index]
-                                                        ['thumbnail'],
-                                                    // "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg"
-                                                  };
-                                                  controller
-                                                      .removeCartItem(data);
-                                                },
-                                                icon: Icon(
-                                                  Icons.delete,
-                                                  // color: dangerDark,
-                                                )),
-                                          ],
+                                        Text(
+                                          bookList[index]['category'],
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium,
                                         ),
                                       ],
                                     ),
-                                  ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "\$${bookList[index]['price']}",
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .labelLarge,
+                                        ),
+                                        IconButton(
+                                            onPressed: () {
+                                              Map<String, dynamic> data = {
+                                                "bookid": bookList[index]
+                                                    ['bookid'],
+                                                "title": bookList[index]
+                                                    ['title'],
+                                                "category": bookList[index]
+                                                    ['category'],
+                                                "price": bookList[index]
+                                                    ['price'],
+                                                "thumbnail": bookList[index]
+                                                    ['thumbnail'],
+                                                // "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg"
+                                              };
+                                              controller.removeCartItem(data);
+                                            },
+                                            icon: Icon(
+                                              Icons.delete,
+                                              // color: dangerDark,
+                                            )),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      );
-                    }),
-              ],
-            ),
+                      ),
+                    ),
+                  );
+                }),
           ),
           bottomNavigationBar: Container(
             height: Get.height * 0.08,
@@ -195,8 +184,10 @@ class CartView extends GetView<CartController> {
                       };
                       if (body['details'].isBlank == true) {
                         Get.defaultDialog(
-                          content: Text("Choose at least 1 item to check out"),
-                          textConfirm: "ok",
+                          title: 'message'.tr,
+                          titleStyle: Theme.of(context).textTheme.labelMedium,
+                          content: Text("blankcart".tr),
+                          textConfirm: "ok".tr,
                           onConfirm: () => Get.back(),
                         );
                       } else {

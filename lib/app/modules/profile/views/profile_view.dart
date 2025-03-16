@@ -72,7 +72,6 @@ class ProfileView extends GetView<ProfileController> {
                             TextFormField(
                               controller: _firstController,
                               decoration: InputDecoration(
-                                fillColor: Colors.white,
                                 hintText: 'Input Firstname',
                                 hintStyle:
                                     Theme.of(context).textTheme.headlineMedium,
@@ -85,7 +84,7 @@ class ProfileView extends GetView<ProfileController> {
                                 ),
                                 border: OutlineInputBorder(),
                               ),
-                              style: Theme.of(context).textTheme.headlineSmall,
+                              style: Theme.of(context).textTheme.labelLarge,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Firstname Required';
@@ -112,7 +111,7 @@ class ProfileView extends GetView<ProfileController> {
                                 ),
                                 border: OutlineInputBorder(),
                               ),
-                              style: Theme.of(context).textTheme.headlineSmall,
+                              style: Theme.of(context).textTheme.labelLarge,
                             ),
                             const SizedBox(
                               height: 10,
@@ -128,7 +127,7 @@ class ProfileView extends GetView<ProfileController> {
                                     Theme.of(context).textTheme.headlineMedium,
                                 border: OutlineInputBorder(),
                               ),
-                              style: Theme.of(context).textTheme.headlineSmall,
+                              style: Theme.of(context).textTheme.labelLarge,
                             ),
                           ],
                         ),

@@ -11,7 +11,10 @@ class CartController extends GetxController {
   RxList get cart => _cart;
   final RxDouble _total = 0.0.obs;
   RxDouble get total => _total;
-  RxInt num = 1.obs;
+  // RxInt num = 1.obs;
+
+  final RxInt _num = 0.obs;
+  RxInt get num => _num;
 
   @override
   void onInit() {
@@ -30,7 +33,7 @@ class CartController extends GetxController {
   }
 
   void addToCart(Map<String, dynamic> data) async {
-    num++;
+    // num++;
     var cart = _storage.read('cart');
     List<dynamic> stored = [];
     if (cart == null) {
@@ -42,6 +45,7 @@ class CartController extends GetxController {
     _cart.value = stored;
     _storage.write('cart', stored);
     readCart();
+    checkCart();
   }
 
   void readCart() async {
@@ -67,5 +71,16 @@ class CartController extends GetxController {
       _storage.write('cart', stored);
       readCart();
     }
+    checkCart();
+  }
+
+  void checkCart() async {
+    var stored = await _storage.read('cart');
+    if (stored == null) {
+      _num.value = 0;
+    } else {
+      _num.value = stored.length;
+    }
+    update();
   }
 }

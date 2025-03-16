@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:obs/app/constants/app_constant.dart';
+import 'package:obs/app/modules/mybooks/views/mybooks_view.dart';
 import 'package:obs/app/modules/profile/views/profile_view.dart';
 
 import '../controllers/users_controller.dart';
@@ -133,113 +134,130 @@ class UsersView extends GetView<UsersController> {
                         : AppColors.lightcardColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Column(
-                    children: [
-                      ListTile(
-                        leading: Icon(Icons.lock_outline),
-                        title: Text("changepassword".tr),
-                        subtitle: Text("changepassword_sub".tr),
-                        trailing: Icon(Icons.arrow_forward_ios),
-                      ),
-                      const Divider(),
-                      ListTile(
-                        leading: Icon(Icons.book_outlined),
-                        title: Text("mybooks".tr),
-                        subtitle: Text("mybooks_sub".tr),
-                        trailing: Icon(Icons.arrow_forward_ios),
-                      ),
-                      const Divider(),
-                      ListTile(
-                        leading: Icon(Icons.dark_mode_outlined),
-                        title: Text("darkmode".tr),
-                        subtitle: Text("darkmode_sub".tr),
-                        trailing: Transform.scale(
-                            scale: 0.7,
-                            child: Switch(
-                              value: controller.isDarkmode.value,
-                              onChanged: (value) {
-                                if (value) {
-                                  // Get.changeTheme(ThemeData.dark());
-                                  Get.changeThemeMode(ThemeMode.dark);
-                                } else {
-                                  // Get.changeTheme(ThemeData.light());
-                                  Get.changeThemeMode(ThemeMode.light);
-                                }
-                                controller.writeMode(value);
-                              },
-                              activeColor: AppColors.primaryColor,
-                            )),
-                      ),
-                      const Divider(),
-                      InkWell(
-                        onTap: () => Get.defaultDialog(
-                          title: 'change_lang'.tr,
-                          titleStyle:
-                              Theme.of(context).textTheme.headlineMedium,
-                          content: Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  var locale = Locale('kh', 'KM');
-                                  Get.updateLocale(locale);
-                                  controller.writeLanguage('kh');
-                                  Get.back();
-                                },
-                                child: ListTile(
-                                  leading: Image.asset(
-                                    "assets/images/kh.png",
-                                    fit: BoxFit.fill,
-                                    width: 30,
-                                    height: 30,
-                                  ),
-                                  title: Text("khmer".tr),
-                                  trailing: Get.locale == Locale('kh', 'KM')
-                                      ? Icon(
-                                          Icons.check,
-                                          size: 16,
-                                        )
-                                      : SizedBox(),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  var locale = Locale('en', 'US');
-                                  Get.updateLocale(locale);
-                                  controller.writeLanguage('en');
-                                  Get.back();
-                                },
-                                child: ListTile(
-                                  leading: Image.asset(
-                                    "assets/images/en.png",
-                                    fit: BoxFit.fill,
-                                    width: 30,
-                                    height: 30,
-                                  ),
-                                  title: Text("english".tr),
-                                  trailing: Get.locale == Locale('en', 'US')
-                                      ? Icon(
-                                          Icons.check,
-                                          size: 16,
-                                        )
-                                      : SizedBox(),
-                                ),
-                              ),
-                            ],
+                  child: Card(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: Icon(Icons.lock_outline),
+                          title: Text("changepassword".tr),
+                          subtitle: Text("changepassword_sub".tr),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                        ),
+                        const Divider(),
+                        GestureDetector(
+                          onTap: () => Get.to(MybooksView()),
+                          child: ListTile(
+                            leading: Icon(Icons.book_outlined),
+                            title: Text("mybooks".tr),
+                            subtitle: Text("mybooks_sub".tr),
+                            trailing: Icon(Icons.arrow_forward_ios),
                           ),
                         ),
-                        child: ListTile(
-                          leading: Icon(Icons.language_outlined),
-                          title: Text("change_lang".tr),
-                          subtitle: Text("change_lang_sub".tr),
+                        const Divider(),
+                        ListTile(
+                          leading: Icon(Icons.dark_mode_outlined),
+                          title: Text("darkmode".tr),
+                          subtitle: Text("darkmode_sub".tr),
+                          trailing: Transform.scale(
+                              scale: 0.7,
+                              child: Switch(
+                                value: controller.isDarkmode.value,
+                                onChanged: (value) {
+                                  if (value) {
+                                    // Get.changeTheme(ThemeData.dark());
+                                    Get.changeThemeMode(ThemeMode.dark);
+                                  } else {
+                                    // Get.changeTheme(ThemeData.light());
+                                    Get.changeThemeMode(ThemeMode.light);
+                                  }
+                                  controller.writeMode(value);
+                                },
+                                activeColor: AppColors.primaryColor,
+                              )),
                         ),
-                      ),
-                      const Divider(),
-                      ListTile(
-                        leading: Icon(Icons.exit_to_app_outlined),
-                        title: Text("logout".tr),
-                        subtitle: Text("logout_sub".tr),
-                      ),
-                    ],
+                        const Divider(),
+                        GestureDetector(
+                          onTap: () => Get.defaultDialog(
+                            title: 'change_lang'.tr,
+                            titleStyle:
+                                Theme.of(context).textTheme.headlineMedium,
+                            content: Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    var locale = Locale('kh', 'KM');
+                                    Get.updateLocale(locale);
+                                    controller.writeLanguage('kh');
+                                    Get.back();
+                                  },
+                                  child: ListTile(
+                                    leading: Image.asset(
+                                      "assets/images/kh.png",
+                                      fit: BoxFit.fill,
+                                      width: 30,
+                                      height: 30,
+                                    ),
+                                    title: Text(
+                                      "khmer".tr,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ),
+                                    trailing: Get.locale == Locale('kh', 'KM')
+                                        ? Icon(
+                                            Icons.check,
+                                            size: 16,
+                                            color: Colors.green,
+                                          )
+                                        : SizedBox(),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    var locale = Locale('en', 'US');
+                                    Get.updateLocale(locale);
+                                    controller.writeLanguage('en');
+                                    Get.back();
+                                  },
+                                  child: ListTile(
+                                    leading: Image.asset(
+                                      "assets/images/en.png",
+                                      fit: BoxFit.fill,
+                                      width: 30,
+                                      height: 30,
+                                    ),
+                                    title: Text(
+                                      "english".tr,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ),
+                                    trailing: Get.locale == Locale('en', 'US')
+                                        ? Icon(
+                                            Icons.check,
+                                            size: 16,
+                                            color: Colors.green,
+                                          )
+                                        : SizedBox(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          child: ListTile(
+                            leading: Icon(Icons.language_outlined),
+                            title: Text("change_lang".tr),
+                            subtitle: Text("change_lang_sub".tr),
+                          ),
+                        ),
+                        const Divider(),
+                        ListTile(
+                          leading: Icon(Icons.exit_to_app_outlined),
+                          title: Text("logout".tr),
+                          subtitle: Text("logout_sub".tr),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
