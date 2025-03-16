@@ -72,28 +72,42 @@ class MainScreenView extends GetView<MainScreenController> {
               label: "Favorites",
             ),
             BottomNavigationBarItem(
-              icon: badges.Badge(
-                badgeContent: Text(
-                  '0',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                child: mainScreenController.isSelectIndex.value == 2
-                    ? SvgPicture.asset(
-                        svgShopping,
-                        height: 30.0,
-                        width: 30.0,
-                      )
-                    : HugeIcon(
-                        icon: HugeIcons.strokeRoundedShoppingBag03,
-                        color: primaryColors,
-                        size: 30.0,
+              icon: mainScreenController.num.value != 0
+                  ? badges.Badge(
+                      badgeContent: Text(
+                        mainScreenController.num.value != 0
+                            ? mainScreenController.num.value.toString()
+                            : '',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-              ),
+                      child: mainScreenController.isSelectIndex.value == 2
+                          ? SvgPicture.asset(
+                              svgShopping,
+                              height: 30.0,
+                              width: 30.0,
+                            )
+                          : HugeIcon(
+                              icon: HugeIcons.strokeRoundedShoppingBag03,
+                              color: primaryColors,
+                              size: 30.0,
+                            ),
+                    )
+                  : mainScreenController.isSelectIndex.value == 2
+                      ? SvgPicture.asset(
+                          svgShopping,
+                          height: 30.0,
+                          width: 30.0,
+                        )
+                      : HugeIcon(
+                          icon: HugeIcons.strokeRoundedShoppingBag03,
+                          color: primaryColors,
+                          size: 30.0,
+                        ),
               label: "Cart",
             ),
             BottomNavigationBarItem(

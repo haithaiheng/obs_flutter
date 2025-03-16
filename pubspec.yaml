@@ -41,6 +41,8 @@ dependencies:
   badges: ^3.1.2
   get_storage: ^2.0.3
   khqr_sdk: ^1.0.4
+  syncfusion_flutter_pdfviewer: ^28.2.11
+  
 
 dev_dependencies:
   flutter_test:

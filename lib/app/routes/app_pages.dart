@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/book/bindings/book_binding.dart';
+import '../modules/book/views/book_view.dart';
 import '../modules/book_details/bindings/book_details_binding.dart';
 import '../modules/book_details/views/book_details_view.dart';
 import '../modules/confirmorder/bindings/confirmorder_binding.dart';
@@ -57,6 +59,11 @@ class AppPages {
       name: _Paths.PAYWITHBAKONG,
       page: () => const PaywithbakongView(),
       binding: PaywithbakongBinding(),
+    ),
+    GetPage(
+      name: _Paths.BOOK,
+      page: () => const BookView(),
+      binding: BookBinding(),
     ),
   ];
 }
