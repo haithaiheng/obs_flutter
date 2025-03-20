@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -18,8 +20,8 @@ class MainScreenView extends GetView<MainScreenController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(() => mainScreenController
-          .pages[mainScreenController.isSelectIndex.value]),
+      body: Obx(() =>
+          mainScreenController.pages[mainScreenController.isSelectIndex.value]),
       bottomNavigationBar: Obx(() {
         return BottomNavigationBar(
           type: BottomNavigationBarType.fixed,

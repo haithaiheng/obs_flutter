@@ -16,7 +16,6 @@ import 'package:obs/app/modules/users/controllers/users_controller.dart';
 
 import 'package:obs/colors/constants.dart';
 import 'package:obs/colors/svgIcon.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../controllers/book_details_controller.dart';
 
