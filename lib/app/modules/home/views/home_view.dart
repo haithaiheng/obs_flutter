@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:obs/app/constants/app_constant.dart';
 import 'package:obs/app/constants/loading_widget.dart';
@@ -167,7 +166,6 @@ class HomeView extends StatelessWidget {
                         Get.toNamed('/categories-details', arguments: {
                           'cate_title': category['cate_title'],
                           'cate_id': category['cate_id'],
-                          'books': books,
                         });
                       } else {
                         Get.snackbar("Error", "Null Categories!");
@@ -204,7 +202,7 @@ class HomeView extends StatelessWidget {
                       onTap: () {
                         if (book['book_id'] != null) {
                           final bookId = book['book_id'];
-                          print("This is ID for find book : ${bookId}");
+                          // print("This is ID for find book : ${bookId}");
                           Get.toNamed('/book-details', arguments: {
                             'id': bookId,
                             'title': book['book_title'],

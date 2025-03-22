@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:obs/app/constants/app_constant.dart';
+import 'package:obs/app/constants/loading_widget.dart';
 import 'package:obs/app/modules/book_details/controllers/book_details_controller.dart';
+import 'package:obs/app/modules/categories_details/models/category_details_model.dart';
 import 'package:obs/app/modules/users/controllers/users_controller.dart';
 
 import '../../../../colors/constants.dart';
@@ -14,10 +16,9 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
   CategoriesDetailsView({super.key});
 
   final categoryTile = Get.arguments?['cate_title'] ?? 'Unknown';
-  final categoryId = Get.arguments?['cate_id'] ?? 0;
-  final List books = Get.arguments?['books'] ?? [];
 
   final _userController = Get.put(UsersController());
+  final _categoryContoller = Get.put(CategoriesDetailsController());
 
   @override
   Widget build(BuildContext context) {
@@ -44,39 +45,62 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 15, left: 15),
-              child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 15,
-                      crossAxisSpacing: 15,
-                      childAspectRatio: 0.46),
-                  itemCount: books.length,
-                  primary: false,
-                  itemBuilder: (context, index) {
-                    final book = books[index];
-                    return GestureDetector(
-                      onTap: () {
-                        if (book['book_id'] != null) {
-                          Get.toNamed('/book-details', arguments: {
-                            'id': book['book_id'],
-                            'title': book['book_title'],
-                          });
-                        } else {
-                          Get.snackbar("Error", "Book details not found.");
-                        }
-                      },
-                      child: _cardBookViews(book, categoryTile),
-                    );
-                  }),
+      body: Obx(() {
+        if (_categoryContoller.isLoading.value) {
+          return Center(
+            child: LoadingWidget(),
+          );
+        }
+
+        if (_categoryContoller.isError.value.isNotEmpty) {
+          return Center(
+            child: Text(
+              _categoryContoller.isError.value,
+              style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: AppFonts.englishFont),
             ),
-          ),
-        ],
-      ),
+          );
+        }
+        //---------------------------------------
+        return Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 15, left: 15),
+                child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 15,
+                            crossAxisSpacing: 15,
+                            childAspectRatio: 0.46),
+                    itemCount: _categoryContoller.books.length,
+                    primary: false,
+                    itemBuilder: (context, index) {
+                      final CategoryDetailsModel book =
+                          _categoryContoller.books[index];
+                      return GestureDetector(
+                        onTap: () {
+                          if (book.bookId != null) {
+                            Get.toNamed('/book-details', arguments: {
+                              'id': book.bookId,
+                              'title': book.bookTitle,
+                            });
+                          } else {
+                            Get.snackbar("Error", "Book details not found.");
+                          }
+                        },
+                        child: _cardBookViews(book, categoryTile),
+                      );
+                    }),
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 
@@ -118,7 +142,7 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
-                        '${book['book_thumbnail']}',
+                        'http://116.212.146.111/obs/uploads/thumbnail/${book.bookThumbnail}',
                         fit: BoxFit.cover,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
@@ -163,7 +187,7 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
             ),
             const SizedBox(height: 10),
             Text(
-              "${book['book_title']}",
+              book.bookTitle.toString(),
               style: TextStyle(
                 fontFamily: "Poppins",
                 fontWeight: FontWeight.bold,
@@ -231,7 +255,7 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
               children: [
                 Expanded(
                   child: Text(
-                    '\$ ${book['book_price']}',
+                    '\$ 000',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: dangerDark,
@@ -258,8 +282,9 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
                           size: 22,
                         ),
                         const SizedBox(width: 4),
+                        // yes
                         Text(
-                          "${book['rating'] ?? 0}",
+                          "${0}",
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Poppins',
