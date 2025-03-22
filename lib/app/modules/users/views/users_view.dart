@@ -139,7 +139,7 @@ class UsersView extends GetView<UsersController> {
                         ),
                         const Divider(),
                         GestureDetector(
-                          onTap: () => Get.to(MybooksView()),
+                          onTap: () => Get.to(() => MybooksView()),
                           child: ListTile(
                             leading: Icon(Icons.book_outlined),
                             title: Text("mybooks".tr),

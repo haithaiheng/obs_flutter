@@ -50,10 +50,11 @@ class PaywithbakongController extends GetxController {
         // Get.offAll(MybooksView());
       } else {
         print(value['message']);
+        Get.snackbar("message".tr, "Order failed");
       }
     }, onError: (error) {
       print("Order Error: ${error.toString()}");
-      Get.snackbar("message", "Order failed");
+      Get.snackbar("message".tr, "Order failed");
     });
   }
 
