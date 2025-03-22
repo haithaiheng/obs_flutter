@@ -128,12 +128,6 @@ class UsersView extends GetView<UsersController> {
                 Container(
                   margin:
                       const EdgeInsets.only(right: 15, left: 15, bottom: 15),
-                  decoration: BoxDecoration(
-                    color: controller.isDarkmode.value
-                        ? AppColors.secondaryColor
-                        : AppColors.lightcardColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
                   child: Card(
                     child: Column(
                       children: [

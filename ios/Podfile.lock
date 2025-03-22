@@ -1,8 +1,10 @@
 PODS:
-  - BakongKHQR (1.0.0.15)
+  - BakongKHQR (1.0.0.16)
   - device_info_plus (0.0.1):
     - Flutter
   - Flutter (1.0.0)
+  - flutter_pdfview (1.0.2):
+    - Flutter
   - khqr_sdk (1.0.0):
     - BakongKHQR (~> 1.0.0.15)
     - Flutter
@@ -15,9 +17,9 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - BakongKHQR (= 1.0.0.15)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - Flutter (from `Flutter`)
+  - flutter_pdfview (from `.symlinks/plugins/flutter_pdfview/ios`)
   - khqr_sdk (from `.symlinks/plugins/khqr_sdk/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - syncfusion_flutter_pdfviewer (from `.symlinks/plugins/syncfusion_flutter_pdfviewer/ios`)
@@ -32,6 +34,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/device_info_plus/ios"
   Flutter:
     :path: Flutter
+  flutter_pdfview:
+    :path: ".symlinks/plugins/flutter_pdfview/ios"
   khqr_sdk:
     :path: ".symlinks/plugins/khqr_sdk/ios"
   path_provider_foundation:
@@ -42,14 +46,15 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  BakongKHQR: 6ade9d154b26056075c9b8bcc865ad7ca1652424
+  BakongKHQR: e25c01340c6cb0c928a51a3f76398b21fec6cc41
   device_info_plus: 21fcca2080fbcd348be798aa36c3e5ed849eefbe
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_pdfview: 32bf27bda6fd85b9dd2c09628a824df5081246cf
   khqr_sdk: 9d6d79c83659a1874ac9060f4a563923f4225821
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   syncfusion_flutter_pdfviewer: dfb514751af5b6b71e504c9c04a2e4ddbc1dd895
   url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
 
-PODFILE CHECKSUM: 73f38b6b25d98508d988f6c43e8536b55a36e6eb
+PODFILE CHECKSUM: cd93e2c37b5cd543faef9dd5015eba6437c0a079
 
 COCOAPODS: 1.16.2

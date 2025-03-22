@@ -45,4 +45,4 @@ end
 source "https://sambo:ycfXmxxRbyzEmozY9z6n@gitlab.nbc.gov.kh/khqr/khqr-ios-pod.git"
 source 'https://github.com/CocoaPods/Specs.git'
 # Temporary solution override need to remove it back after new version khqr_sdk released.
-pod 'BakongKHQR', '1.0.0.15'
+# pod 'BakongKHQR', '1.0.0.15'

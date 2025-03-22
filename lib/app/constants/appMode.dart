@@ -67,7 +67,7 @@ ThemeData darkTheme = ThemeData(
       color: AppColors.secondaryColor,
     ),
     labelSmall: TextStyle(
-      fontSize: 14,
+      fontSize: 12,
       color: AppColors.secondaryColor,
     ),
   ),
@@ -126,7 +126,7 @@ ThemeData lightTheme = ThemeData(
       color: AppColors.thirdColor,
     ),
     labelSmall: TextStyle(
-      fontSize: 14,
+      fontSize: 12,
       color: AppColors.thirdColor,
     ),
   ),
