@@ -12,7 +12,7 @@ class MybooksController extends GetxController {
   final RxList _list = [].obs;
   RxList get list => _list;
   var _page = 1;
-  var _total = 0;
+  var _total = 1;
   RxStatus status = RxStatus.loading();
   RxString isError = "".obs;
   @override
@@ -38,8 +38,6 @@ class MybooksController extends GetxController {
       } else {
         _page += 1;
       }
-      print("page $_page");
-      print("page ${_total/10.round()}");
         provider.fetchMybook(1, _page).then((value) {
           if (value == 'argument missing'){
             status = RxStatus.error();
@@ -55,12 +53,12 @@ class MybooksController extends GetxController {
               if (value['message'] == 'success') {
                 status = RxStatus.success();
                 if (_page > 1) {
-                  var l = value['datas'].map((e) => e).toList();
+                  var l = value['data'].map((e) => e).toList();
                   _list.addAll(l);
                 } else {
-                  _list.value = value['datas'];
+                  _list.value = value['data'];
                 }
-                _total = value['total'];
+                _total = value['page'];
               }
             }
           }

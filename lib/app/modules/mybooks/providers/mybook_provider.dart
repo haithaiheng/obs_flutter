@@ -4,14 +4,14 @@ import 'package:obs/app/constants/application.dart';
 class MybookProvider extends GetConnect {
   Future<dynamic> fetchMybook(int userid, int pageid) async {
     try {
-      var body = {'userid': userid, 'page': pageid};
+      var body = {'id': userid, 'page': pageid};
       final response =
           await post("${application.apiBaseUrl}mybooks", body);
       if (response.statusCode == 200) {
         final message = response.body['message'];
         if (message == 'success') {
           return response.body;
-        } else if (message == 'no data') {
+        } else if (message == 'unfound') {
           return 'empty';
         } else {
           return 'argument missing';

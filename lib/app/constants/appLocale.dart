@@ -44,6 +44,7 @@ class Messages extends Translations {
           'topage': 'Go to page',
           'page': 'Page',
           'blankpage': 'Can not be blank',
+          'retry':'Retry'
         },
         'kh_KM': {
           'hello': 'សួស្តី',
@@ -84,6 +85,7 @@ class Messages extends Translations {
           'topage': 'ឆ្ពោះទៅទំព័រ',
           'page': 'ទំព័រ',
           'blankpage': 'មិនអាចទំនេរ',
+          'retry':'ព្យាយាមម្តងទៀត'
         }
       };
 }

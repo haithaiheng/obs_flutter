@@ -23,7 +23,10 @@ class MybooksView extends GetView<MybooksController> {
         ),
         body: controller.status.isLoading
             ? Center(
-                child: CircularProgressIndicator(),
+                child: Transform.scale(
+                  scale: 0.5,
+                  child: CircularProgressIndicator(),
+                ),
               )
             : controller.status.isError
                 ? Center(
@@ -32,9 +35,11 @@ class MybooksView extends GetView<MybooksController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(controller.isError.value),
-                        TextButton(onPressed: (){
-                          controller.fetchMybooks(true);
-                        }, child: Text("Retry"))
+                        TextButton(
+                            onPressed: () {
+                              controller.fetchMybooks(true);
+                            },
+                            child: Text("retry".tr))
                       ],
                     ),
                   )
