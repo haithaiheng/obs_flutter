@@ -11,14 +11,10 @@ class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
   @override
   Widget build(BuildContext context) {
-    TextEditingController _firstController = TextEditingController();
-    TextEditingController _lastController = TextEditingController();
-    TextEditingController _bioController = TextEditingController();
+
     final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
-    _firstController.text = 'Thaiheng';
-    _lastController.text = 'Hai';
-    _bioController.text = 'Love Coding';
+
     return GetBuilder<ProfileController>(
         init: ProfileController(),
         builder: (controller) => Scaffold(
@@ -70,7 +66,7 @@ class ProfileView extends GetView<ProfileController> {
                         child: Column(
                           children: [
                             TextFormField(
-                              controller: _firstController,
+                              controller: controller.firstController,
                               decoration: InputDecoration(
                                 hintText: 'Input Firstname',
                                 hintStyle:
@@ -97,7 +93,7 @@ class ProfileView extends GetView<ProfileController> {
                               height: 10,
                             ),
                             TextFormField(
-                              controller: _lastController,
+                              controller: controller.lastController,
                               decoration: InputDecoration(
                                 hintText: 'Input Lastname',
                                 hintStyle:
@@ -117,14 +113,14 @@ class ProfileView extends GetView<ProfileController> {
                               height: 10,
                             ),
                             TextFormField(
-                              controller: _bioController,
+                              controller: controller.bioController,
                               minLines: 5,
                               maxLines: null,
                               keyboardType: TextInputType.multiline,
                               decoration: InputDecoration.collapsed(
                                 hintText: 'Input Bio',
                                 hintStyle:
-                                    Theme.of(context).textTheme.headlineMedium,
+                                    Theme.of(context).textTheme.labelMedium,
                                 border: OutlineInputBorder(),
                               ),
                               style: Theme.of(context).textTheme.labelLarge,
@@ -142,14 +138,9 @@ class ProfileView extends GetView<ProfileController> {
                   child: ElevatedButton.icon(
                     onPressed: () {
                       if (_key.currentState!.validate()) {}
-                      Map<String, dynamic> map = {
-                        "userid": 1,
-                        "first": _firstController.text,
-                        "last": _lastController.text,
-                        "bio": _bioController.text
-                      };
-                      var body = jsonEncode(map);
-                      controller.updateProfile(body);
+
+                      // var body = jsonEncode(map);
+                      controller.updateProfile();
                     },
                     label: controller.isLoading
                         ? CircularProgressIndicator(

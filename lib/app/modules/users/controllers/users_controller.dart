@@ -1,48 +1,40 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:obs/app/routes/app_pages.dart';
 
 class UsersController extends GetxController {
-  //TODO: Implement UsersController
-
-  late RxString lang = 'en'.obs;
-  late RxBool isDarkmode = false.obs;
   final storage = GetStorage();
+  final RxString _profile = ''.obs;
+
+  RxString get profile => _profile;
+
   @override
   void onInit() {
-    readMode();
-    readLanguage();
+    readProfile();
     super.onInit();
   }
 
   @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
   void onClose() {
+    // TODO: implement onClose
     super.onClose();
   }
 
-  void writeLanguage(String language) {
-    storage.write('lang', language);
-    lang.value = language;
-    update();
+  void logout() {
+    storage.remove('login');
+    final isLogin = storage.read('login');
+    if (isLogin == null) {
+      Get.offAllNamed(Routes.SIGNIN);
+    }
   }
 
-  void readLanguage() {
-    lang(storage.read('lang')) ;
-    update();
-  }
-
-  void writeMode(bool mode) {
-    storage.write('mode', mode);
-    isDarkmode.value = mode;
-    update();
-  }
-
-  void readMode() {
-    isDarkmode(storage.read('mode'));
-    update();
+  void readProfile() {
+    final myJson = storage.read('login');
+    if (myJson != null) {
+      _profile.value = jsonEncode(myJson);
+      update();
+    }
   }
 }

@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:obs/app/modules/users/controllers/users_controller.dart';
 import 'package:obs/colors/constants.dart';
 import 'package:obs/colors/svgIcon.dart';
 
@@ -16,7 +15,6 @@ class MainScreenView extends GetView<MainScreenController> {
   MainScreenView({super.key});
 
   final mainScreenController = Get.put(MainScreenController());
-  final _userController = Get.put(UsersController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(

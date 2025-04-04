@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'package:hugeicons/hugeicons.dart';
+import 'package:obs/app/Controllers/MainController.dart';
 import 'package:obs/app/constants/app_constant.dart';
 import 'package:obs/app/constants/loading_widget.dart';
 import 'package:obs/app/modules/book_details/models/books_detail_model.dart';
@@ -25,7 +26,7 @@ class BookDetailsView extends GetView<BookDetailsController> {
   final Map<String, dynamic> bookData = Get.arguments;
 
   final bookController = Get.put(BookDetailsController());
-  final UsersController _userController = Get.find();
+  final MainController _mainController = Get.find();
 
   // Fix user id example for test comment show
   final userID = 1;
@@ -53,7 +54,7 @@ class BookDetailsView extends GetView<BookDetailsController> {
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: false,
-        backgroundColor: _userController.isDarkmode.value
+        backgroundColor: _mainController.isDarkMode.value
             ? AppColors.darkcardColor
             : AppColors.secondaryColor,
         leading: IconButton(
@@ -72,7 +73,7 @@ class BookDetailsView extends GetView<BookDetailsController> {
             fontWeight: FontWeight.bold,
             fontSize: 20,
             fontFamily: AppFonts.englishFont,
-            color: _userController.isDarkmode.value
+            color: _mainController.isDarkMode.value
                 ? AppColors.secondaryColor
                 : AppColors.darkcardColor,
           ),
@@ -230,7 +231,7 @@ class BookDetailsView extends GetView<BookDetailsController> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: _userController.isDarkmode.value
+        color: _mainController.isDarkMode.value
             ? AppColors.darkcardColor
             : AppColors.secondaryColor,
         borderRadius: BorderRadius.circular(10),
@@ -419,7 +420,7 @@ class BookDetailsView extends GetView<BookDetailsController> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: _userController.isDarkmode.value
+        color: _mainController.isDarkMode.value
             ? AppColors.darkcardColor
             : AppColors.secondaryColor,
         borderRadius: BorderRadius.circular(10),
@@ -449,7 +450,7 @@ class BookDetailsView extends GetView<BookDetailsController> {
                       fontWeight: FontWeight.bold,
                       fontFamily: AppFonts.englishFont,
                       fontSize: 16,
-                      color: _userController.isDarkmode.value
+                      color: _mainController.isDarkMode.value
                           ? AppColors.lightcardColor
                           : AppColors.darkcardColor,
                     ),
@@ -514,7 +515,7 @@ class BookDetailsView extends GetView<BookDetailsController> {
           padding: const EdgeInsets.only(top: 10),
           child: Container(
             decoration: BoxDecoration(
-              color: _userController.isDarkmode.value
+              color: _mainController.isDarkMode.value
                   ? AppColors.thirdColor
                   : AppColors.lightcardColor,
               borderRadius: BorderRadius.only(
@@ -560,7 +561,7 @@ class BookDetailsView extends GetView<BookDetailsController> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontFamily: AppFonts.englishFont,
-                                    color: _userController.isDarkmode.value
+                                    color: _mainController.isDarkMode.value
                                         ? AppColors.secondaryColor
                                         : AppColors.darkcardColor,
                                   ),
@@ -603,7 +604,7 @@ class BookDetailsView extends GetView<BookDetailsController> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: _userController.isDarkmode.value
+        color: _mainController.isDarkMode.value
             ? AppColors.darkcardColor
             : AppColors.secondaryColor,
         borderRadius: BorderRadius.circular(10),
@@ -628,12 +629,12 @@ class BookDetailsView extends GetView<BookDetailsController> {
             borderSide: BorderSide.none,
           ),
           filled: true,
-          fillColor: _userController.isDarkmode.value
+          fillColor: _mainController.isDarkMode.value
               ? AppColors.thirdColor
               : AppColors.lightcardColor,
           hintText: "Comment",
           hintStyle: TextStyle(
-            color: _userController.isDarkmode.value
+            color: _mainController.isDarkMode.value
                 ? AppColors.lightcardColor
                 : Colors.grey,
           ),

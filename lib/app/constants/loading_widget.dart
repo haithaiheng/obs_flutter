@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:obs/app/Controllers/MainController.dart';
 
 import '../modules/users/controllers/users_controller.dart';
 import 'app_constant.dart'; // Assuming GetX for state management
@@ -12,14 +13,14 @@ class LoadingWidget extends StatefulWidget {
 }
 
 class _LoadingWidgetState extends State<LoadingWidget> {
-  final _usersController = Get.find<UsersController>();
+  final _mainController = Get.find<MainController>();
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
         decoration: BoxDecoration(
-          color: _usersController.isDarkmode.value
+          color: _mainController.isDarkMode.value
               ? AppColors.darkcardColor
               : AppColors.lightcardColor,
           borderRadius: BorderRadius.circular(20),
@@ -39,7 +40,7 @@ class _LoadingWidgetState extends State<LoadingWidget> {
                   fontFamily: AppFonts.khmerFont,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: _usersController.isDarkmode.value
+                  color: _mainController.isDarkMode.value
                       ? AppColors.lightcardColor
                       : AppColors.darkcardColor,
                 ),

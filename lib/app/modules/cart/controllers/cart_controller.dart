@@ -11,13 +11,14 @@ class CartController extends GetxController {
   RxList get cart => _cart;
   final RxDouble _total = 0.0.obs;
   RxDouble get total => _total;
-  // RxInt num = 1.obs;
+  var _userid = "0";
 
   final RxInt _num = 0.obs;
   RxInt get num => _num;
 
   @override
   void onInit() {
+    getId();
     readCart();
     super.onInit();
   }
@@ -32,27 +33,27 @@ class CartController extends GetxController {
     super.onClose();
   }
 
-  void addToCart(Map<String, dynamic> data) async {
+  void addToCart(Map<String, dynamic> data) {
     // num++;
-    var cart = _storage.read('cart');
+    var cart = _storage.read('cart.$_userid');
     List<dynamic> stored = [];
     if (cart == null) {
       stored.add(jsonEncode(data));
     } else {
-      stored = _storage.read('cart');
+      stored = _storage.read('cart.$_userid');
       stored.add(jsonEncode(data));
     }
     _cart.value = stored;
-    _storage.write('cart', stored);
+    _storage.write('cart.$_userid', stored);
     readCart();
     checkCart();
   }
 
-  void readCart() async {
+  void readCart() {
     _total.value = 0;
-    var cart = await _storage.read('cart');
+    var cart = _storage.read('cart.$_userid');
     if (cart != null) {
-      List<dynamic> stored = await _storage.read('cart');
+      List<dynamic> stored = _storage.read('cart.$_userid');
       List<Map<String, dynamic>> l = [];
       for (var i = 0; i < stored.length; i++) {
         Map<String, dynamic> map = jsonDecode(stored[i]);
@@ -65,22 +66,26 @@ class CartController extends GetxController {
   }
 
   void removeCartItem(Map<String, dynamic> data) async {
-    List<dynamic> stored = await _storage.read('cart');
+    List<dynamic> stored = await _storage.read('cart.$_userid');
     if (stored.contains(jsonEncode(data))) {
       stored.remove(jsonEncode(data));
-      _storage.write('cart', stored);
+      _storage.write('cart.$_userid', stored);
       readCart();
     }
     checkCart();
   }
 
   void checkCart() async {
-    var stored = await _storage.read('cart');
-    if (stored == null) {
-      _num.value = 0;
-    } else {
+    _num.value = 0;
+    var stored = await _storage.read('cart.$_userid');
+    if (stored != null) {
       _num.value = stored.length;
     }
     update();
+  }
+
+  void getId(){
+    final isLogin = _storage.read('login');
+    _userid = isLogin['user_id'];
   }
 }

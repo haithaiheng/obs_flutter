@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:obs/app/Controllers/MainController.dart';
+import 'package:obs/app/constants/appMode.dart';
 import 'package:obs/app/constants/app_constant.dart';
 import 'package:obs/app/modules/mybooks/views/mybooks_view.dart';
 import 'package:obs/app/modules/profile/views/profile_view.dart';
@@ -12,9 +16,11 @@ class UsersView extends GetView<UsersController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UsersController>(
-      init: UsersController(),
-      builder: (controller) => Scaffold(
+    final controller = Get.put(UsersController());
+    final mainController = Get.put(MainController());
+    return Obx((){
+      final profile = jsonDecode(controller.profile.value);
+      return Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -60,7 +66,7 @@ class UsersView extends GetView<UsersController> {
                               Expanded(
                                 child: Column(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
@@ -73,7 +79,7 @@ class UsersView extends GetView<UsersController> {
                                     Column(
                                       children: [
                                         Text(
-                                          "Thaiheng Hai",
+                                          "${profile['user_firstname']} ${profile['user_lastname']}",
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
                                           style: TextStyle(
@@ -83,7 +89,7 @@ class UsersView extends GetView<UsersController> {
                                           ),
                                         ),
                                         Text(
-                                          "thaihenghai@gmail.com",
+                                          profile['user_email'],
                                           style: TextStyle(
                                             fontSize: 12,
                                             color: AppColors.secondaryColor,
@@ -113,8 +119,11 @@ class UsersView extends GetView<UsersController> {
                           ),
                         ),
                         child: IconButton(
-                            onPressed: () {
-                              Get.to(ProfileView());
+                            onPressed: () async {
+                              final result = await Get.to(()=>ProfileView() , arguments: profile);
+                              if (result){
+                                controller.readProfile();
+                              }
                             },
                             icon: Icon(
                               Icons.edit,
@@ -127,18 +136,21 @@ class UsersView extends GetView<UsersController> {
                 ),
                 Container(
                   margin:
-                      const EdgeInsets.only(right: 15, left: 15, bottom: 15),
+                  const EdgeInsets.only(right: 15, left: 15, bottom: 15),
                   child: Card(
                     child: Column(
                       children: [
-                        ListTile(
-                          leading: Icon(Icons.lock_outline),
-                          title: Text("changepassword".tr),
-                          subtitle: Text("changepassword_sub".tr),
-                          trailing: Icon(Icons.arrow_forward_ios),
+                        InkWell(
+                          onTap: controller.readProfile,
+                          child: ListTile(
+                            leading: Icon(Icons.lock_outline),
+                            title: Text("changepassword".tr),
+                            subtitle: Text("changepassword_sub".tr),
+                            trailing: Icon(Icons.arrow_forward_ios),
+                          ),
                         ),
                         const Divider(),
-                        GestureDetector(
+                        InkWell(
                           onTap: () => Get.to(() => MybooksView()),
                           child: ListTile(
                             leading: Icon(Icons.book_outlined),
@@ -155,33 +167,28 @@ class UsersView extends GetView<UsersController> {
                           trailing: Transform.scale(
                               scale: 0.7,
                               child: Switch(
-                                value: controller.isDarkmode.value,
+                                value: mainController.isDarkMode.value,
                                 onChanged: (value) {
-                                  if (value) {
-                                    // Get.changeTheme(ThemeData.dark());
-                                    Get.changeThemeMode(ThemeMode.dark);
-                                  } else {
-                                    // Get.changeTheme(ThemeData.light());
-                                    Get.changeThemeMode(ThemeMode.light);
-                                  }
-                                  controller.writeMode(value);
+                                  value ? Get.changeThemeMode(ThemeMode.dark) : Get.changeThemeMode(ThemeMode.light);
+                                  mainController.writeMode(value);
                                 },
                                 activeColor: AppColors.primaryColor,
                               )),
                         ),
                         const Divider(),
-                        GestureDetector(
+                        InkWell(
                           onTap: () => Get.defaultDialog(
                             title: 'change_lang'.tr,
                             titleStyle:
-                                Theme.of(context).textTheme.headlineMedium,
+                            Theme.of(context).textTheme.headlineMedium,
                             content: Column(
                               children: [
                                 InkWell(
                                   onTap: () {
                                     var locale = Locale('kh', 'KM');
                                     Get.updateLocale(locale);
-                                    controller.writeLanguage('kh');
+                                    CustomTheme.font = "KantumruyPro";
+                                    mainController.writeLanguage('kh');
                                     Get.back();
                                   },
                                   child: ListTile(
@@ -199,10 +206,10 @@ class UsersView extends GetView<UsersController> {
                                     ),
                                     trailing: Get.locale == Locale('kh', 'KM')
                                         ? Icon(
-                                            Icons.check,
-                                            size: 16,
-                                            color: Colors.green,
-                                          )
+                                      Icons.check,
+                                      size: 16,
+                                      color: Colors.green,
+                                    )
                                         : SizedBox(),
                                   ),
                                 ),
@@ -210,7 +217,8 @@ class UsersView extends GetView<UsersController> {
                                   onTap: () {
                                     var locale = Locale('en', 'US');
                                     Get.updateLocale(locale);
-                                    controller.writeLanguage('en');
+                                    CustomTheme.font = "Poppins";
+                                    mainController.writeLanguage('en');
                                     Get.back();
                                   },
                                   child: ListTile(
@@ -228,10 +236,10 @@ class UsersView extends GetView<UsersController> {
                                     ),
                                     trailing: Get.locale == Locale('en', 'US')
                                         ? Icon(
-                                            Icons.check,
-                                            size: 16,
-                                            color: Colors.green,
-                                          )
+                                      Icons.check,
+                                      size: 16,
+                                      color: Colors.green,
+                                    )
                                         : SizedBox(),
                                   ),
                                 ),
@@ -245,10 +253,13 @@ class UsersView extends GetView<UsersController> {
                           ),
                         ),
                         const Divider(),
-                        ListTile(
-                          leading: Icon(Icons.exit_to_app_outlined),
-                          title: Text("logout".tr),
-                          subtitle: Text("logout_sub".tr),
+                        InkWell(
+                          onTap: ()=> controller.logout(),
+                          child: ListTile(
+                            leading: Icon(Icons.exit_to_app_outlined),
+                            title: Text("logout".tr),
+                            subtitle: Text("logout_sub".tr),
+                          ),
                         ),
                       ],
                     ),
@@ -258,7 +269,7 @@ class UsersView extends GetView<UsersController> {
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

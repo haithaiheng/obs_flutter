@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:obs/app/Controllers/MainController.dart';
 import 'package:obs/app/constants/app_constant.dart';
 import 'package:obs/app/constants/loading_widget.dart';
 import 'package:obs/app/modules/users/controllers/users_controller.dart';
@@ -14,7 +15,7 @@ class HomeView extends StatelessWidget {
   HomeView({super.key});
 
   final HomeController _controller = Get.put(HomeController());
-  final UsersController _usersController = Get.put(UsersController());
+  final MainController _mainController = Get.put(MainController());
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -22,7 +23,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _usersController.isDarkmode.value
+      backgroundColor: _mainController.isDarkMode.value
           ? darkColors
           : AppColors.secondaryColor,
       appBar: _appbar(),
@@ -66,7 +67,7 @@ class HomeView extends StatelessWidget {
                           horizontal: 20,
                           vertical: 10,
                         ),
-                        backgroundColor: _usersController.isDarkmode.value
+                        backgroundColor: _mainController.isDarkMode.value
                             ? AppColors.darkcardColor
                             : AppColors.secondaryColor,
                       ),
@@ -98,7 +99,7 @@ class HomeView extends StatelessWidget {
     return AppBar(
       forceMaterialTransparency: true,
       elevation: 0.9,
-      backgroundColor: _usersController.isDarkmode.value
+      backgroundColor: _mainController.isDarkMode.value
           ? AppColors.darkcardColor
           : AppColors.lightcardColor,
       title: Row(
@@ -113,7 +114,7 @@ class HomeView extends StatelessWidget {
             style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: _usersController.isDarkmode.value
+                color: _mainController.isDarkMode.value
                     ? AppColors.lightcardColor
                     : AppColors.thirdColor),
           ),
@@ -124,6 +125,7 @@ class HomeView extends StatelessWidget {
         IconButton(
           onPressed: () {
             // Handle search action
+
           },
           icon: HugeIcon(
             icon: HugeIcons.strokeRoundedSearch01,
@@ -155,7 +157,7 @@ class HomeView extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: _usersController.isDarkmode.value
+                      color: _mainController.isDarkMode.value
                           ? AppColors.lightcardColor
                           : AppColors.thirdColor,
                     ),
@@ -225,7 +227,7 @@ class HomeView extends StatelessWidget {
     return Container(
       width: 180,
       decoration: BoxDecoration(
-        color: _usersController.isDarkmode.value
+        color: _mainController.isDarkMode.value
             ? AppColors.darkcardColor
             : Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -264,7 +266,7 @@ class HomeView extends StatelessWidget {
                     right: -10,
                     top: -10,
                     child: CircleAvatar(
-                      backgroundColor: _usersController.isDarkmode.value
+                      backgroundColor: _mainController.isDarkMode.value
                           ? AppColors.darkcardColor
                           : Colors.white,
                       child: IconButton(
@@ -286,7 +288,7 @@ class HomeView extends StatelessWidget {
               style: TextStyle(
                 fontFamily: "Poppins",
                 fontWeight: FontWeight.bold,
-                color: _usersController.isDarkmode.value
+                color: _mainController.isDarkMode.value
                     ? Colors.white
                     : AppColors.darkcardColor,
               ),

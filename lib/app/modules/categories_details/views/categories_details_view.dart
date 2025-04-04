@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:obs/app/Controllers/MainController.dart';
 import 'package:obs/app/constants/app_constant.dart';
 import 'package:obs/app/constants/loading_widget.dart';
 import 'package:obs/app/modules/book_details/controllers/book_details_controller.dart';
@@ -17,7 +18,7 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
 
   final categoryTile = Get.arguments?['cate_title'] ?? 'Unknown';
 
-  final _userController = Get.put(UsersController());
+  final _mainController = Get.put(MainController());
   final _categoryContoller = Get.put(CategoriesDetailsController());
 
   @override
@@ -25,7 +26,7 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
-        backgroundColor: _userController.isDarkmode.value
+        backgroundColor: _mainController.isDarkMode.value
             ? AppColors.thirdColor
             : Colors.white,
         leading: IconButton(
@@ -39,7 +40,7 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
               fontWeight: FontWeight.bold,
               fontSize: 20,
               fontFamily: AppFonts.englishFont,
-              color: _userController.isDarkmode.value
+              color: _mainController.isDarkMode.value
                   ? AppColors.lightcardColor
                   : AppColors.darkcardColor),
         ),
@@ -108,7 +109,7 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
     return Container(
       width: 180,
       decoration: BoxDecoration(
-        color: _userController.isDarkmode.value
+        color: _mainController.isDarkMode.value
             ? AppColors.darkcardColor
             : Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -169,7 +170,7 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
                     right: -10,
                     top: -10,
                     child: CircleAvatar(
-                      backgroundColor: _userController.isDarkmode.value
+                      backgroundColor: _mainController.isDarkMode.value
                           ? AppColors.darkcardColor
                           : Colors.white,
                       child: IconButton(
@@ -191,7 +192,7 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
               style: TextStyle(
                 fontFamily: "Poppins",
                 fontWeight: FontWeight.bold,
-                color: _userController.isDarkmode.value
+                color: _mainController.isDarkMode.value
                     ? Colors.white
                     : AppColors.darkcardColor,
               ),

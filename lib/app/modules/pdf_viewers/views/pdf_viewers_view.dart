@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:obs/app/Controllers/MainController.dart';
 import 'package:obs/app/constants/app_constant.dart';
 import 'package:obs/app/modules/users/controllers/users_controller.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -13,10 +14,10 @@ class PdfViewersView extends GetView<PdfViewersController> {
   @override
   Widget build(BuildContext context) {
     final pdfBook = Get.arguments?['pdf_url'] ?? '';
-    final UsersController _userController = Get.find();
+    final MainController _mainController = Get.find();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: _userController.isDarkmode.value
+        backgroundColor: _mainController.isDarkMode.value
             ? AppColors.darkcardColor
             : AppColors.secondaryColor,
         leading: IconButton(
@@ -34,7 +35,7 @@ class PdfViewersView extends GetView<PdfViewersController> {
               fontWeight: FontWeight.bold,
               fontSize: 20,
               fontFamily: AppFonts.englishFont,
-              color: _userController.isDarkmode.value
+              color: _mainController.isDarkMode.value
                   ? AppColors.secondaryColor
                   : AppColors.darkcardColor,
             )),
