@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:obs/app/modules/users/bindings/users_binding.dart';
-import 'package:obs/app/modules/users/views/users_view.dart';
 
 import '../modules/book/bindings/book_binding.dart';
 import '../modules/book/views/book_view.dart';
@@ -26,12 +24,16 @@ import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/reset_passowrd/bindings/reset_passowrd_binding.dart';
 import '../modules/reset_passowrd/views/reset_passowrd_view.dart';
+import '../modules/search/bindings/search_binding.dart';
+import '../modules/search/views/search_view.dart';
 import '../modules/signin/bindings/signin_binding.dart';
 import '../modules/signin/views/signin_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/splash_screen/bindings/splash_screen_binding.dart';
 import '../modules/splash_screen/views/splash_screen_view.dart';
+import '../modules/users/bindings/users_binding.dart';
+import '../modules/users/views/users_view.dart';
 import '../modules/verify/bindings/verify_binding.dart';
 import '../modules/verify/views/verify_view.dart';
 
@@ -127,6 +129,11 @@ class AppPages {
       name: _Paths.USERS,
       page: () => const UsersView(),
       binding: UsersBinding(),
+    ),
+    GetPage(
+      name: _Paths.SEARCH,
+      page: () => const SearchView(),
+      binding: SearchBinding(),
     ),
   ];
 }

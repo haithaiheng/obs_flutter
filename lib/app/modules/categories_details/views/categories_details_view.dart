@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:obs/app/Controllers/MainController.dart';
 import 'package:obs/app/constants/app_constant.dart';
 import 'package:obs/app/constants/loading_widget.dart';
@@ -66,46 +67,50 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
           );
         }
         //---------------------------------------
-        return Column(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 15, left: 15),
-                child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 15,
-                            crossAxisSpacing: 15,
-                            childAspectRatio: 0.46),
-                    itemCount: _categoryContoller.books.length,
-                    primary: false,
-                    itemBuilder: (context, index) {
-                      final CategoryDetailsModel book =
-                          _categoryContoller.books[index];
-                      return GestureDetector(
-                        onTap: () {
-                          if (book.bookId != null) {
-                            Get.toNamed('/book-details', arguments: {
-                              'id': book.bookId,
-                              'title': book.bookTitle,
-                            });
-                          } else {
-                            Get.snackbar("Error", "Book details not found.");
-                          }
-                        },
-                        child: _cardBookViews(book, categoryTile),
-                      );
-                    }),
+        return RefreshIndicator(
+          onRefresh: ()=> _categoryContoller.getBooksByCate(Get.arguments['cate_id'], true),
+          child: Column(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 15, left: 15),
+                  child: LazyLoadScrollView(
+                    onEndOfPage: ()=> _categoryContoller.getBooksByCate(Get.arguments['cate_id'], false),
+                    child: GridView.builder(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 15,
+                                crossAxisSpacing: 15,
+                                childAspectRatio: 0.46),
+                        itemCount: _categoryContoller.books.length,
+                        primary: false,
+                        itemBuilder: (context, index) {
+                          final CategoryDetailsModel book =
+                              _categoryContoller.books[index];
+                          return GestureDetector(
+                            onTap: () {
+                              if (book.bookId != null) {
+                                Get.toNamed('/book-details', arguments: book.bookId.toString());
+                              } else {
+                                Get.snackbar("Error", "Book details not found.");
+                              }
+                            },
+                            child: _cardBookViews(book, categoryTile),
+                          );
+                        }),
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       }),
     );
   }
 
-  _cardBookViews(book, category) {
+  _cardBookViews(CategoryDetailsModel book, category) {
     return Container(
       width: 180,
       decoration: BoxDecoration(
@@ -143,7 +148,7 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
-                        'http://116.212.146.111/obs/uploads/thumbnail/${book.bookThumbnail}',
+                        book.bookThumbnail,
                         fit: BoxFit.cover,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
@@ -256,7 +261,7 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
               children: [
                 Expanded(
                   child: Text(
-                    '\$ 000',
+                    '\$ ${book.bookPrice.toString()}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: dangerDark,
@@ -283,9 +288,9 @@ class CategoriesDetailsView extends GetView<CategoriesDetailsController> {
                           size: 22,
                         ),
                         const SizedBox(width: 4),
-                        // yes
+                        // rating
                         Text(
-                          "${0}",
+                          book.bookRate.toString(),
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Poppins',

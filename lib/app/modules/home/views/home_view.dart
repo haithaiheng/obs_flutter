@@ -7,6 +7,7 @@ import 'package:obs/app/Controllers/MainController.dart';
 import 'package:obs/app/constants/app_constant.dart';
 import 'package:obs/app/constants/loading_widget.dart';
 import 'package:obs/app/modules/users/controllers/users_controller.dart';
+import 'package:obs/app/modules/wishlist/controllers/wishlist_controller.dart';
 
 import 'package:obs/colors/constants.dart';
 import '../controllers/home_controller.dart';
@@ -16,7 +17,7 @@ class HomeView extends StatelessWidget {
 
   final HomeController _controller = Get.put(HomeController());
   final MainController _mainController = Get.put(MainController());
-
+  final WishlistController _wishlistController = Get.put(WishlistController());
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
@@ -95,7 +96,7 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  _appbar() {
+  AppBar _appbar() {
     return AppBar(
       forceMaterialTransparency: true,
       elevation: 0.9,
@@ -125,7 +126,6 @@ class HomeView extends StatelessWidget {
         IconButton(
           onPressed: () {
             // Handle search action
-
           },
           icon: HugeIcon(
             icon: HugeIcons.strokeRoundedSearch01,
@@ -140,15 +140,15 @@ class HomeView extends StatelessWidget {
   Widget _buildContent() {
     return ListView.builder(
       itemCount: _controller.categories.length,
-      itemBuilder: (context, index) {
-        final data = _controller.categories[index];
+      itemBuilder: (context, mainIndex) {
+        final data = _controller.categories[mainIndex];
         final books = data['books'];
         final category = data['categories'];
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 20, top: index == 0 ? 10 : 0),
+              padding: EdgeInsets.only(left: 20, top: mainIndex == 0 ? 10 : 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -174,7 +174,7 @@ class HomeView extends StatelessWidget {
                       }
                     },
                     child: Text(
-                      "See More",
+                      "see_more".tr,
                       style: TextStyle(
                         fontFamily: "Poppins",
                         color: AppColors.primaryColor,
@@ -193,7 +193,6 @@ class HomeView extends StatelessWidget {
                 itemCount: books.length,
                 itemBuilder: (context, index) {
                   final book = books[index];
-
                   return Padding(
                     padding: EdgeInsets.only(
                         right: index == books.length - 1 ? 20 : 0,
@@ -205,13 +204,10 @@ class HomeView extends StatelessWidget {
                         if (book['book_id'] != null) {
                           final bookId = book['book_id'];
                           // print("This is ID for find book : ${bookId}");
-                          Get.toNamed('/book-details', arguments: {
-                            'id': bookId,
-                            'title': book['book_title'],
-                          });
+                          Get.toNamed('/book-details', arguments: bookId);
                         }
                       },
-                      child: _cardBookViews(book, category['cate_title']),
+                      child: _cardBookViews(book, category['cate_title'], mainIndex, index),
                     ),
                   );
                 },
@@ -223,7 +219,8 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _cardBookViews(book, category) {
+  Widget _cardBookViews(book, category, int mIndex, int index) {
+    // print(_controller.bookmark[mIndex][index]);
     return Container(
       width: 180,
       decoration: BoxDecoration(
@@ -269,14 +266,49 @@ class HomeView extends StatelessWidget {
                       backgroundColor: _mainController.isDarkMode.value
                           ? AppColors.darkcardColor
                           : Colors.white,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: HugeIcon(
-                          icon: HugeIcons.strokeRoundedFavourite,
-                          color: Colors.red,
-                          size: 24.0,
-                        ),
-                      ),
+                      child:  Obx(()=>IconButton(
+                          onPressed: () {
+                            var data = {
+                              'id': book['book_id'],
+                              'title': book['book_title'],
+                              'category': category,
+                              'price': book['book_price'],
+                              'book_file': book['book_file'],
+                              'book_thumbnail': book['book_thumbnail'],
+                              'rate': book['rating']
+                            };
+
+                            _controller.bookmark[mIndex][index] ?
+                            _wishlistController.removeWishlistItem(data): _wishlistController.addToWishList(data);
+                            _controller.bookmarkAction(mIndex,index);
+                            // print(mainIndex);
+                          },
+                          icon: _controller.bookmark[mIndex][index] ? Icon(Icons.remove) : HugeIcon(
+                            icon: HugeIcons.strokeRoundedFavourite,
+                            color: Colors.red,
+                            size: 24.0,
+                          )),
+                            ),
+                          // : IconButton(
+                          //     onPressed: () {
+                          //       var data = {
+                          //         'id': book['book_id'],
+                          //         'title': book['book_title'],
+                          //         'category': category,
+                          //         'price': book['book_price'],
+                          //         'book_file': book['book_file'],
+                          //         'book_thumbnail': book['book_thumbnail'],
+                          //         'rate': book['rating']
+                          //       };
+                          //       // print(data);
+                          //       _wishlistController.addToWishList(data);
+                          //     },
+                          //     icon: HugeIcon(
+                          //       icon: HugeIcons.strokeRoundedFavourite,
+                          //       color: Colors.red,
+                          //       size: 24.0,
+                          //     ),
+                          //   ),
                     ),
                   ),
                 ],
@@ -352,7 +384,9 @@ class HomeView extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    '\$ ${book['book_price']}',
+                    num.parse(book['book_price']) == 0
+                        ? "Free"
+                        : "\$ ${book['book_price']}",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: dangerDark,

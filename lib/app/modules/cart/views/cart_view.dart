@@ -20,26 +20,27 @@ class CartView extends GetView<CartController> {
               'cart'.tr,
               style: Theme.of(context).textTheme.headlineLarge,
             ),
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    var data = {
-                      "bookid": controller.num.value,
-                      "title": "Book Title",
-                      "category": "Fantasy",
-                      "price": 2.00,
-                      "thumbnail":
-                          "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg"
-                    };
-                    controller.addToCart(data);
-                  },
-                  icon: Icon(Icons.add)),
-              IconButton(
-                  onPressed: () {
-                    controller.readCart();
-                  },
-                  icon: Icon(Icons.read_more)),
-            ],
+            centerTitle: true,
+            // actions: [
+            //   IconButton(
+            //       onPressed: () {
+            //         var data = {
+            //           "bookid": controller.num.value,
+            //           "title": "Book Title",
+            //           "category": "Fantasy",
+            //           "price": 2.00,
+            //           "thumbnail":
+            //               "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg"
+            //         };
+            //         controller.addToCart(data);
+            //       },
+            //       icon: Icon(Icons.add)),
+            //   IconButton(
+            //       onPressed: () {
+            //         controller.readCart();
+            //       },
+            //       icon: Icon(Icons.read_more)),
+            // ],
           ),
           body: SingleChildScrollView(
             child: ListView.builder(
@@ -191,7 +192,7 @@ class CartView extends GetView<CartController> {
                           onConfirm: () => Get.back(),
                         );
                       } else {
-                        Get.to(ConfirmorderView(), arguments: body);
+                        Get.to(()=>ConfirmorderView(), arguments: body);
                       }
                     },
                     child: Text(

@@ -10,12 +10,11 @@ class CategoriesDetailsController extends GetxController {
   final _dio = Dio();
   final _api = Application();
   RxInt isID = RxInt(0);
+  var page =1;
 
   RxList<CategoryDetailsModel> books = RxList([]);
   RxBool isLoading = RxBool(true);
   RxString isError = RxString("");
-  final count = 0.obs;
-
   @override
   void onInit() {
     super.onInit();
@@ -23,7 +22,7 @@ class CategoriesDetailsController extends GetxController {
     // Check Connection for controller
     if (isID.value != null) {
       print("This is ID: ${isID}");
-      getBooksByCate(isID);
+      getBooksByCate(isID, true);
     } else {
       print("This is failed ID");
     }
@@ -39,21 +38,29 @@ class CategoriesDetailsController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
 
-  void getBooksByCate(id) async {
+  Future<void> getBooksByCate(id, bool firstLoad) async {
     isLoading(true);
     isError("");
 
     try {
+      if (firstLoad){
+        page = 1;
+      }else{
+        page +=1;
+      }
       final response =
-          await _dio.get('${_api.apiBaseUrl}bookbycategory?id=${id}');
+          await _dio.get('${_api.apiBaseUrl}bookbycategory?id=${id}&page=${page}');
 
       if (response.statusCode == 200) {
         // print("Response Data: ${response.data['data']}");
         final data = response.data['data'] as List;
         // print("This is: ${data}");
-        books(data.map((json) => CategoryDetailsModel.fromJson(json)).toList());
+        if (firstLoad){
+          books(data.map((json) => CategoryDetailsModel.fromJson(json)).toList());
+        }else{
+          books.addAll(data.map((json) => CategoryDetailsModel.fromJson(json)).toList());
+        }
       } else {
         isError("Failed request data, status: ${response.statusCode}");
       }

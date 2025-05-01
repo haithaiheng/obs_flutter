@@ -18,6 +18,7 @@ class CartController extends GetxController {
 
   @override
   void onInit() {
+    // _storage.remove(('cart.$_userid'));
     getId();
     readCart();
     super.onInit();
@@ -54,6 +55,7 @@ class CartController extends GetxController {
     var cart = _storage.read('cart.$_userid');
     if (cart != null) {
       List<dynamic> stored = _storage.read('cart.$_userid');
+      // print("read card: ${stored}");
       List<Map<String, dynamic>> l = [];
       for (var i = 0; i < stored.length; i++) {
         Map<String, dynamic> map = jsonDecode(stored[i]);

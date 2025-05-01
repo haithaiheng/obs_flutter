@@ -52,8 +52,8 @@ class SignupView extends GetView<SignupController> {
                     TextFormField(
                       controller: controller.firstname,
                       decoration: InputDecoration(
-                          hintText: "enter first name",
-                          labelText: "First name",
+                          hintText: "enter_fristname".tr,
+                          labelText: "firstname".tr,
                           prefixIcon: Icon(
                             Icons.person,
                             color: AppColors.primaryColor,
@@ -67,7 +67,7 @@ class SignupView extends GetView<SignupController> {
                               borderRadius: BorderRadius.circular(50))),
                       validator: (value){
                         if (value == null || value.isEmpty){
-                          return "First Name is required";
+                          return "required_firstname".tr;
                         }
                         return null;
                       },
@@ -75,8 +75,8 @@ class SignupView extends GetView<SignupController> {
                     TextFormField(
                       controller: controller.lastname,
                       decoration: InputDecoration(
-                          hintText: "enter last name",
-                          labelText: "Last name",
+                          hintText: "enter_lastname".tr,
+                          labelText: "lastname".tr,
                           prefixIcon: Icon(
                             Icons.person,
                             color: AppColors.primaryColor,
@@ -88,7 +88,7 @@ class SignupView extends GetView<SignupController> {
                               borderRadius: BorderRadius.circular(50))),
                       validator: (value){
                         if (value == null || value.isEmpty){
-                          return "Last Name is required";
+                          return "required_lastname".tr;
                         }
                         return null;
                       },
@@ -97,8 +97,8 @@ class SignupView extends GetView<SignupController> {
                       controller: controller.email,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                          hintText: "enter email address",
-                          labelText: "Email",
+                          hintText: "enter_address".tr,
+                          labelText: "email".tr,
                           prefixIcon: Icon(
                             Icons.email_outlined,
                             color: AppColors.primaryColor,
@@ -110,7 +110,7 @@ class SignupView extends GetView<SignupController> {
                               borderRadius: BorderRadius.circular(50))),
                       validator: (value){
                         if (value == null || value.isEmpty){
-                          return "Email is required";
+                          return "required_email".tr;
                         }else if(!emailValidate(value)){
                           return "Email is not valid";
                         }
@@ -122,8 +122,8 @@ class SignupView extends GetView<SignupController> {
                       obscureText: controller.passwordObscure.value,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                          hintText: "enter password",
-                          labelText: "Password",
+                          hintText: "enter_password".tr,
+                          labelText: "password".tr,
                           prefixIcon: Icon(
                             Icons.lock_outline_rounded,
                             color: AppColors.primaryColor,
@@ -140,7 +140,7 @@ class SignupView extends GetView<SignupController> {
                               borderRadius: BorderRadius.circular(50))),
                       validator: (value){
                         if (value == null || value.isEmpty){
-                          return "Password is required";
+                          return "required_password".tr;
                         }
                         return null;
                       },
@@ -149,8 +149,8 @@ class SignupView extends GetView<SignupController> {
                       obscureText: controller.confirmObscure.value,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                          hintText: "enter confirm password",
-                          labelText: "Confirm Password",
+                          hintText: "enter_confirmpassword".tr,
+                          labelText: "confirmpassword".tr,
                           prefixIcon: Icon(
                             Icons.lock_outline_rounded,
                             color: AppColors.primaryColor,
@@ -167,7 +167,7 @@ class SignupView extends GetView<SignupController> {
                               borderRadius: BorderRadius.circular(50))),
                       validator: (value){
                         if (value == null || value.isEmpty){
-                          return "Confirm password is required";
+                          return "required_confirmpassword".tr;
                         }else if(value != controller.password.text){
                           return "Confirm password is not match";
                         }
@@ -200,7 +200,7 @@ class SignupView extends GetView<SignupController> {
                             controller.createAccount();
                           }
                         },
-                        child: Text("SING UP", style: TextStyle(fontWeight: FontWeight.bold),),
+                        child: Text("signup".tr, style: TextStyle(fontWeight: FontWeight.bold),),
                       ),
                     ),
                     controller.errorStr.value != null ? Text(controller.errorStr.value, style: TextStyle(color: Colors.red),) : SizedBox(),
@@ -208,10 +208,10 @@ class SignupView extends GetView<SignupController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Do you have an account?"),
+                        Text("have_account".tr),
                         TextButton(onPressed: () {
                           Get.offAllNamed(Routes.SIGNIN);
-                        }, child: Text("Sign In",style: TextStyle(color: AppColors.primaryColor),)),
+                        }, child: Text("signin".tr,style: TextStyle(color: AppColors.primaryColor),)),
                       ],
                     ),
                   ],

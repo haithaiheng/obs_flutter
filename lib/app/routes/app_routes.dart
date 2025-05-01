@@ -22,6 +22,7 @@ abstract class Routes {
   static const VERIFY = _Paths.VERIFY;
   static const RESET_PASSOWRD = _Paths.RESET_PASSOWRD;
   static const USERS = _Paths.USERS;
+  static const SEARCH = _Paths.SEARCH;
 }
 
 abstract class _Paths {
@@ -45,4 +46,5 @@ abstract class _Paths {
   static const VERIFY = '/verify';
   static const RESET_PASSOWRD = '/reset-passowrd';
   static const USERS = '/users';
+  static const SEARCH = '/search';
 }

@@ -2,24 +2,44 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:obs/app/constants/application.dart';
 import 'package:obs/app/modules/book_details/models/books_detail_model.dart';
+
+import '../../cart/controllers/cart_controller.dart';
 
 class BookDetailsController extends GetxController {
   final _apiUrl = Application();
   final _dio = Dio();
 
-  Rx<BookDetailsModel?> book = Rx<BookDetailsModel?>(null);
+  final Rx<BookDetailsModel> book = BookDetailsModel().obs;
+  final _cartController = Get.put(CartController());
 
   RxBool isLoading = RxBool(true);
   RxString isError = RxString("");
   RxBool isShowDes = RxBool(false);
   RxBool isShowComments = RxBool(false);
+  RxBool isOrdered = false.obs;
+  RxBool addCart = false.obs;
 
   final count = 0.obs;
+  RxString uid = ''.obs;
+  final storage = GetStorage();
+  var _userid = "0";
+
 
   @override
-  void onInit() {
+  void onInit() async{
+    getId();
+
+    getUserId();
+    final bookId = Get.arguments;
+    if (bookId == null){
+      isError("Book Id is not found");
+    }else{
+      await getBook(int.parse(bookId));
+    }
+    readFromCart();
     super.onInit();
   }
 
@@ -33,27 +53,31 @@ class BookDetailsController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+  void getUserId(){
+    final user = storage.read('login');
+    uid.value = user['user_id'];
+    update();
+  }
 
   // Method to fetch book details
-  void getBook(int id) async {
+  Future<void> getBook(int id) async {
     isLoading(true);
     isError.value = "";
-
     try {
+      var body = {'id': id, 'uid': uid.value};
       final response =
-          await _dio.get('${_apiUrl.apiBaseUrl}bookdetail.php?id=$id');
-
+          await _dio.get('${_apiUrl.apiBaseUrl}bookdetail', data: body, options: Options(headers: {'Content-Type':'application/json'}));
       if (response.statusCode == 200) {
-        var rawData = jsonDecode(response.data);
 
+        // var rawData = jsonDecode(response.data);
+        final rawData = response.data;
         if (rawData['data'] != null) {
-          book.value = BookDetailsModel.fromJson(rawData['data']);
-          // print("Book Details: ${book.value}");
+          book.value = BookDetailsModel.fromJson(rawData);
+          isOrdered.value = rawData['data']['ordered'];
+          // print(book.value);
         } else {
           isError.value = "No data found";
         }
-
         update();
       } else {
         isLoading(false);
@@ -78,4 +102,39 @@ class BookDetailsController extends GetxController {
   }
 
   void showComments() => isShowComments.value = !isShowComments.value;
+
+  void addToCart(){
+    var data = {
+      "bookid": num.parse(book.value.datas!.bookId!),
+      "title": book.value.datas!.bookTitle,
+      "category": book.value.datas!.cateTitle,
+      "price": num.parse(book.value.datas!.bookPrice!),
+      "thumbnail":
+      book.value.datas!.bookThumbnail
+    };
+    // _cartController.addToCart(data);
+    addCart(true);
+    update();
+  }
+
+  void getId(){
+    final isLogin = storage.read('login');
+    _userid = isLogin['user_id'];
+  }
+
+  Future<void> readFromCart() async {
+    var data = {
+      "bookid": num.parse(book.value.datas!.bookId!),
+      "title": book.value.datas!.bookTitle,
+      "category": book.value.datas!.cateTitle,
+      "price": num.parse(book.value.datas!.bookPrice!),
+      "thumbnail":
+      book.value.datas!.bookThumbnail
+    };
+    List<dynamic> stored = await storage.read('cart.$_userid');
+    if (stored.contains(jsonEncode(data))) {
+      addCart(true);
+    }
+    update();
+  }
 }
