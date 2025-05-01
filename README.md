@@ -1,6 +1,11 @@
 # obs
 
-A new Flutter project.
+A Flutter project. We built a simple structure for book online store.
+This app allow feature as:
+- user can read books are free on app.
+- user need to register if they don't have an account before they can buy books.
+- user can add favorite books to read next time.
+- etc...
 
 ## Getting Started
 
