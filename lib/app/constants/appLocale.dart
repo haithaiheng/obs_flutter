@@ -81,7 +81,8 @@ class Messages extends Translations {
           'read':'Read',
           'addtocart':'Add to Cart',
           'see_more':'See More',
-          'wishlist':'Wishlist'
+          'wishlist':'Wishlist',
+          'search':'Search'
         },
         'kh_KM': {
           'hello': 'សួស្តី',

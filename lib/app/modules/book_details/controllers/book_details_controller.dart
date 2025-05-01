@@ -37,6 +37,7 @@ class BookDetailsController extends GetxController {
     if (bookId == null){
       isError("Book Id is not found");
     }else{
+      print(bookId);
       await getBook(int.parse(bookId));
     }
     readFromCart();

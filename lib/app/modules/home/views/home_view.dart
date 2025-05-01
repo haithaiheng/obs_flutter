@@ -10,6 +10,7 @@ import 'package:obs/app/modules/users/controllers/users_controller.dart';
 import 'package:obs/app/modules/wishlist/controllers/wishlist_controller.dart';
 
 import 'package:obs/colors/constants.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends StatelessWidget {
@@ -126,6 +127,7 @@ class HomeView extends StatelessWidget {
         IconButton(
           onPressed: () {
             // Handle search action
+            Get.toNamed(Routes.SEARCH);
           },
           icon: HugeIcon(
             icon: HugeIcons.strokeRoundedSearch01,
