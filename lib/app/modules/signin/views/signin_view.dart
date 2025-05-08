@@ -138,14 +138,14 @@ class SigninView extends GetView<SigninController> {
                                 WidgetStatePropertyAll(Colors.transparent),
                                 shadowColor:
                                 WidgetStatePropertyAll(Colors.transparent)),
-                            onPressed: ()  {
+                            onPressed: () async {
                               if (formKey.currentState!.validate()){
 
-                                controller.login(email.text, password.text);
-                                  formKey.currentState!.reset();
+                                await controller.login(email.text, password.text);
+                                  // formKey.currentState!.reset();
                               }
                             },
-                            child: controller.isLoading.value ? Transform.scale(scale: 0.2, child: CircularProgressIndicator(),) : Text(
+                            child: controller.isLoading.value ? Transform.scale(scale: 0.2, child: CircularProgressIndicator(color: Colors.white,),) : Text(
                               "signin".tr,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),

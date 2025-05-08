@@ -195,9 +195,9 @@ class SignupView extends GetView<SignupController> {
                             WidgetStatePropertyAll(Colors.transparent),
                             shadowColor:
                             WidgetStatePropertyAll(Colors.transparent)),
-                        onPressed: () {
+                        onPressed: () async {
                           if (controller.formKey.currentState!.validate()){
-                            controller.createAccount();
+                            await controller.createAccount();
                           }
                         },
                         child: Text("signup".tr, style: TextStyle(fontWeight: FontWeight.bold),),

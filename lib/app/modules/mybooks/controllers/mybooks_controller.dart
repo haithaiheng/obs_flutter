@@ -1,7 +1,3 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:obs/app/modules/mybooks/providers/mybook_provider.dart';
 
@@ -15,8 +11,10 @@ class MybooksController extends GetxController {
   var _total = 1;
   RxStatus status = RxStatus.loading();
   RxString isError = "".obs;
+  final RxString _userLogin = ''.obs;
   @override
   void onInit() {
+    _userLogin.value = Get.arguments;
     fetchMybooks(true);
     super.onInit();
   }
@@ -38,7 +36,7 @@ class MybooksController extends GetxController {
       } else {
         _page += 1;
       }
-        provider.fetchMybook(1, _page).then((value) {
+        provider.fetchMybook(int.parse(_userLogin.value), _page).then((value) {
           if (value == 'argument missing'){
             status = RxStatus.error();
             isError('argument missing');
@@ -49,6 +47,7 @@ class MybooksController extends GetxController {
             if (value is String){
               status = RxStatus.error();
               isError(value);
+              print(value);
             }else{
               if (value['message'] == 'success') {
                 status = RxStatus.success();

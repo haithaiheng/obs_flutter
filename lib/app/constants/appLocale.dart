@@ -82,7 +82,8 @@ class Messages extends Translations {
           'addtocart':'Add to Cart',
           'see_more':'See More',
           'wishlist':'Wishlist',
-          'search':'Search'
+          'search':'Search',
+          'payment':'Payment'
         },
         'kh_KM': {
           'hello': 'សួស្តី',
@@ -160,7 +161,8 @@ class Messages extends Translations {
           'read':'អាន',
           'addtocart':'បញ្ជាទិញ',
           'see_more':'មើលបន្ថែម',
-          'wishlist':'បញ្ជីរក្សាទុក'
+          'wishlist':'បញ្ជីរក្សាទុក',
+          'payment':'បង់ប្រាក់'
         }
       };
 }

@@ -6,7 +6,7 @@ PODS:
   - flutter_pdfview (1.0.2):
     - Flutter
   - khqr_sdk (1.0.0):
-    - BakongKHQR (~> 1.0.0.15)
+    - BakongKHQR (= 1.0.0.16)
     - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
@@ -50,7 +50,7 @@ SPEC CHECKSUMS:
   device_info_plus: 21fcca2080fbcd348be798aa36c3e5ed849eefbe
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_pdfview: 32bf27bda6fd85b9dd2c09628a824df5081246cf
-  khqr_sdk: 9d6d79c83659a1874ac9060f4a563923f4225821
+  khqr_sdk: 19fc2b4fd5d550b3b90dad700f08bb912f766862
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   syncfusion_flutter_pdfviewer: dfb514751af5b6b71e504c9c04a2e4ddbc1dd895
   url_launcher_ios: 694010445543906933d732453a59da0a173ae33d

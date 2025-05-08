@@ -70,12 +70,13 @@ class ConfirmorderView extends GetView<ConfirmorderController> {
                                                 Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
+                                                  spacing: 5,
                                                   children: [
                                                     Text(
                                                       book[index]['title'],
                                                       overflow:
                                                           TextOverflow.ellipsis,
-                                                      maxLines: 3,
+                                                      maxLines: 2,
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .headlineMedium,
@@ -147,7 +148,7 @@ class ConfirmorderView extends GetView<ConfirmorderController> {
                             borderRadius: BorderRadius.circular(10),
                             side: BorderSide(color: AppColors.primaryColor))),
                     onPressed: () {
-                      Get.to(PaywithbakongView(), arguments: body);
+                      Get.to(()=>PaywithbakongView(), arguments: body);
                     },
                     child: Text(
                       "paynow".tr,

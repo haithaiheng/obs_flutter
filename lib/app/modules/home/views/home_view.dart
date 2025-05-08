@@ -112,7 +112,7 @@ class HomeView extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           Text(
-            "${'hello'.tr}!, Jonh",
+            "${'hello'.tr}, ${_controller.isName.value}",
             style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

@@ -29,7 +29,7 @@ final _provider = Get.put(ForgotProvider());
     update();
   }
 
-  void forgotPassword(String email) async {
+  Future<void> forgotPassword(String email) async {
     setLoading(true);
     try{
       await _provider.forgot(email).then((value){

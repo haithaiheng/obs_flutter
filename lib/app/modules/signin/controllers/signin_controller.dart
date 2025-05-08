@@ -21,10 +21,10 @@ class SigninController extends GetxController {
     super.onInit();
   }
 
-  void login(String email, String password) async {
+  Future<void> login(String email, String password) async {
     try {
       isLoading(true);
-      _provider.login(email, password).then((value) {
+      await _provider.login(email, password).then((value) {
         if (value is String) {
           Get.snackbar("message".tr,value,
               snackPosition: SnackPosition.BOTTOM);
@@ -40,17 +40,19 @@ class SigninController extends GetxController {
       });
       update();
     } catch (e) {
-      Get.snackbar("Error", e.toString());
+      isLoading(false);
+      update();
+      Get.snackbar("Error", e.toString(), colorText: Colors.green);
     }
   }
 
-  void readStorage(){
-    final stored = _storage.read('login');
+  void readStorage() async{
+    final stored = await _storage.read('login');
     print("sing: $stored");
   }
 
-  void readLanguage(){
-    final stored = _storage.read('lang');
+  void readLanguage() async{
+    final stored = await _storage.read('lang');
     if (stored == 'en'){
       isLocale.value = 'EN';
     }else{

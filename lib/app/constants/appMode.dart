@@ -5,7 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:obs/app/constants/app_constant.dart';
 
 class CustomTheme{
-  static final String _storage = GetStorage().read("lang");
+  static final String _storage = GetStorage().read("lang") ?? 'en' ;
   static String font = _storage == 'en' ? "Poppins" : "KantumruyPro";
 
   ThemeData darkTheme = ThemeData(

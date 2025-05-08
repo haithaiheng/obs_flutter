@@ -100,40 +100,42 @@ class CartView extends GetView<CartController> {
                                         ),
                                       ],
                                     ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "\$${bookList[index]['price']}",
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .labelLarge,
-                                        ),
-                                        IconButton(
-                                            onPressed: () {
-                                              Map<String, dynamic> data = {
-                                                "bookid": bookList[index]
-                                                    ['bookid'],
-                                                "title": bookList[index]
-                                                    ['title'],
-                                                "category": bookList[index]
-                                                    ['category'],
-                                                "price": bookList[index]
-                                                    ['price'],
-                                                "thumbnail": bookList[index]
-                                                    ['thumbnail'],
-                                                // "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg"
-                                              };
-                                              controller.removeCartItem(data);
-                                            },
-                                            icon: Icon(
-                                              Icons.delete,
-                                              // color: dangerDark,
-                                            )),
-                                      ],
+                                    Expanded(
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "\$${bookList[index]['price']}",
+                                            style: Theme.of(context)
+                                                .primaryTextTheme
+                                                .labelLarge,
+                                          ),
+                                          IconButton(
+                                              onPressed: () {
+                                                Map<String, dynamic> data = {
+                                                  "bookid": bookList[index]
+                                                      ['bookid'],
+                                                  "title": bookList[index]
+                                                      ['title'],
+                                                  "category": bookList[index]
+                                                      ['category'],
+                                                  "price": bookList[index]
+                                                      ['price'],
+                                                  "thumbnail": bookList[index]
+                                                      ['thumbnail'],
+                                                  // "https://dm989u341afjd.cloudfront.net/wp-content/uploads/2021/01/11140621/B00ZDAN928.01.LZZZZZZZ.jpg"
+                                                };
+                                                controller.removeCartItem(data);
+                                              },
+                                              icon: Icon(
+                                                Icons.delete,
+                                                // color: dangerDark,
+                                              )),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),

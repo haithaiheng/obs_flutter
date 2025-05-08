@@ -15,6 +15,7 @@ class HomeController extends GetxController {
   // final searchs = TextEditingController();
   final _storage = GetStorage();
   RxList wishList = [].obs;
+  RxString isName = "".obs;
 
   var isLoading = false.obs;
   var isError = "".obs;
@@ -25,6 +26,7 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     getCategory();
+    getUserName();
   }
 
   @override
@@ -33,7 +35,7 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-  void getCategory() async {
+  Future<void> getCategory() async {
     isLoading(true);
     isError("");
     await getWishlistId();
@@ -82,19 +84,27 @@ class HomeController extends GetxController {
 
   Future<void> getWishlistId() async{
     wishList.clear();
-    final isLogin = _storage.read('login');
+    final isLogin = await _storage.read('login');
     final stored = await _storage.read('wishlist.${isLogin['user_id']}');
-    var l = [];
-    for(var i=0;i<stored.length;i++){
-      Map<String, dynamic> map = jsonDecode(stored[i]);
-      l.add(map['id']);
+    if (stored != null){
+      var l = [];
+      for(var i=0;i<stored.length;i++){
+        Map<String, dynamic> map = jsonDecode(stored[i]);
+        l.add(map['id']);
+      }
+      wishList.value = l;
+      update();
     }
-    wishList.value = l;
-    update();
   }
 
   void bookmarkAction(int mIndex, int index){
     bookmark[mIndex][index] = !bookmark[mIndex][index];
+    update();
+  }
+
+  void getUserName(){
+    final user = _storage.read('login');
+    isName.value = user['user_firstname'];
     update();
   }
 }

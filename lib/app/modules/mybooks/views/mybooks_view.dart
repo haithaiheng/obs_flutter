@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:obs/app/modules/book/views/book_view.dart';
 import '../controllers/mybooks_controller.dart';
@@ -34,7 +33,7 @@ class MybooksView extends GetView<MybooksController> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(controller.isError.value),
+                        Text(controller.isError.value, style: TextStyle(color: Colors.red),),
                         TextButton(
                             onPressed: () {
                               controller.fetchMybooks(true);
@@ -54,14 +53,15 @@ class MybooksView extends GetView<MybooksController> {
                           shrinkWrap: true,
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            final mybooks = controller.list.value;
+                            final book = controller.list.value;
                             return GestureDetector(
                               onTap: () => Get.to(() => BookView(),
-                                  arguments: mybooks[index]),
+                                  arguments: book[index]),
                               child: Card(
                                 child: Container(
                                   padding: const EdgeInsets.all(10),
                                   child: Column(
+                                    spacing: 20,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     // mainAxisAlignment:
@@ -75,7 +75,7 @@ class MybooksView extends GetView<MybooksController> {
                                         clipBehavior:
                                             Clip.antiAliasWithSaveLayer,
                                         child: Image.network(
-                                          mybooks[index]['book_thumbnail'],
+                                          book[index]['book_thumbnail'],
                                           width: Get.width * 0.5,
                                           height: Get.height * 0.2,
                                           fit: BoxFit.cover,
@@ -86,7 +86,7 @@ class MybooksView extends GetView<MybooksController> {
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Text(
-                                            mybooks[index]['book_title'],
+                                            book[index]['book_title'],
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headlineMedium,
@@ -97,7 +97,7 @@ class MybooksView extends GetView<MybooksController> {
                                             children: [
                                               Icon(Icons.book),
                                               Text(
-                                                mybooks[index]['book_category'],
+                                                book[index]['book_category'],
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: Theme.of(context)

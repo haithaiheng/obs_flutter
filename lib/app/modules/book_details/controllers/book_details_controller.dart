@@ -113,7 +113,7 @@ class BookDetailsController extends GetxController {
       "thumbnail":
       book.value.datas!.bookThumbnail
     };
-    // _cartController.addToCart(data);
+    _cartController.addToCart(data);
     addCart(true);
     update();
   }
@@ -124,6 +124,7 @@ class BookDetailsController extends GetxController {
   }
 
   Future<void> readFromCart() async {
+    List<dynamic> stored = [];
     var data = {
       "bookid": num.parse(book.value.datas!.bookId!),
       "title": book.value.datas!.bookTitle,
@@ -132,7 +133,10 @@ class BookDetailsController extends GetxController {
       "thumbnail":
       book.value.datas!.bookThumbnail
     };
-    List<dynamic> stored = await storage.read('cart.$_userid');
+    final cart = await storage.read('cart.$_userid');
+    if (cart != null){
+      stored = cart;
+    }
     if (stored.contains(jsonEncode(data))) {
       addCart(true);
     }

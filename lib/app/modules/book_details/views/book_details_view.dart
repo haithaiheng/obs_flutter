@@ -174,7 +174,11 @@ class BookDetailsView extends GetView<BookDetailsController> {
                             borderRadius: BorderRadius.circular(20)),
                         child: TextButton.icon(
                           onPressed: () {
-                            print(controller.book.value);
+                            var data = {
+                              'book_title':book.datas?.bookTitle,
+                              'book_file':book.datas?.bookFile
+                            };
+                            Get.toNamed(Routes.BOOK, arguments: data);
                           },
                           icon: Icon(
                             Icons.menu_book,

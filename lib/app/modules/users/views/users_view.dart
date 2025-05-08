@@ -8,6 +8,7 @@ import 'package:obs/app/constants/appMode.dart';
 import 'package:obs/app/constants/app_constant.dart';
 import 'package:obs/app/modules/mybooks/views/mybooks_view.dart';
 import 'package:obs/app/modules/profile/views/profile_view.dart';
+import 'package:obs/app/routes/app_pages.dart';
 
 import '../controllers/users_controller.dart';
 
@@ -141,7 +142,7 @@ class UsersView extends GetView<UsersController> {
                     child: Column(
                       children: [
                         InkWell(
-                          onTap: controller.readProfile,
+                          onTap: ()=> Get.toNamed(Routes.FORGOT),
                           child: ListTile(
                             leading: Icon(Icons.lock_outline),
                             title: Text("changepassword".tr),
@@ -151,7 +152,7 @@ class UsersView extends GetView<UsersController> {
                         ),
                         const Divider(),
                         InkWell(
-                          onTap: () => Get.to(() => MybooksView()),
+                          onTap: () => Get.to(() => MybooksView(), arguments: controller.userLogin.value),
                           child: ListTile(
                             leading: Icon(Icons.book_outlined),
                             title: Text("mybooks".tr),

@@ -35,7 +35,7 @@ class SignupController extends GetxController {
     super.onClose();
   }
 
-  void createAccount() async{
+  Future<void> createAccount() async{
     try{
       Map body = {
         "no":getRandomString(20),

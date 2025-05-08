@@ -7,11 +7,12 @@ import 'package:obs/app/routes/app_pages.dart';
 class UsersController extends GetxController {
   final storage = GetStorage();
   final RxString _profile = ''.obs;
-
   RxString get profile => _profile;
+  final RxString userLogin = ''.obs;
 
   @override
   void onInit() {
+    getUserId();
     readProfile();
     super.onInit();
   }
@@ -36,5 +37,11 @@ class UsersController extends GetxController {
       _profile.value = jsonEncode(myJson);
       update();
     }
+  }
+
+  void getUserId() async {
+    final isLogin = await storage.read('login');
+    userLogin.value = isLogin['user_id'];
+    update();
   }
 }

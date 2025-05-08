@@ -27,13 +27,18 @@ class MainController extends GetxController{
   }
 
   void readMode() {
-    isDarkMode(storage.read('mode'));
+    final isMode = storage.read('mode');
+    if (isMode != null){
+      isDarkMode(isMode);
+    }
     update();
   }
 
   void readLanguage() {
     final storedLang = storage.read('lang');
-    lang.value = storedLang;
+    if (storedLang != null){
+      lang.value = storedLang;
+    }
     update();
   }
 }

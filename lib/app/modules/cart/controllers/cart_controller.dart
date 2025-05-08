@@ -64,6 +64,9 @@ class CartController extends GetxController {
       }
       _cart.value = l;
       update();
+    }else{
+      _cart.value = [];
+      update();
     }
   }
 
@@ -82,8 +85,9 @@ class CartController extends GetxController {
     var stored = await _storage.read('cart.$_userid');
     if (stored != null) {
       _num.value = stored.length;
+      update();
     }
-    update();
+
   }
 
   void getId(){

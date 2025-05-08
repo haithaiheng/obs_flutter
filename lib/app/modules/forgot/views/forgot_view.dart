@@ -94,10 +94,10 @@ class ForgotView extends GetView<ForgotController> {
                             WidgetStatePropertyAll(Colors.transparent),
                             shadowColor:
                             WidgetStatePropertyAll(Colors.transparent)),
-                        onPressed: ()  {
+                        onPressed: () async {
                           if (formKey.currentState!.validate()){
                             if (controller.isLoading.value) return;
-                            controller.forgotPassword(email.text);
+                            await controller.forgotPassword(email.text);
                             formKey.currentState!.reset();
                           }
                         },

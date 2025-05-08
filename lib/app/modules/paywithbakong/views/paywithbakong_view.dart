@@ -15,7 +15,7 @@ class PaywithbakongView extends GetView<PaywithbakongController> {
   Widget build(BuildContext context) {
     var data = Get.arguments;
     Timer timer = Timer.periodic(
-      Duration(seconds: 20),
+      Duration(seconds: 15),
       (_) {
         if (controller.hasListeners) {
           controller.checkTransaction(data);
@@ -28,7 +28,7 @@ class PaywithbakongView extends GetView<PaywithbakongController> {
       builder: (controller) => Scaffold(
         appBar: AppBar(
           title: Text(
-            "confirmorder".tr,
+            "payment".tr,
             style: Theme.of(context).textTheme.headlineLarge,
           ),
         ),
@@ -57,6 +57,7 @@ class PaywithbakongView extends GetView<PaywithbakongController> {
                       ),
                       ElevatedButton(
                           onPressed: () {
+                            controller.resetCart();
                             Get.offAll(MainScreenView());
                           },
                           child: Text("ok".tr)),
@@ -82,6 +83,10 @@ class PaywithbakongView extends GetView<PaywithbakongController> {
                           currency: KhqrCurrency.khr,
                           qr: controller.qrCode.value,
                         ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: LinearProgressIndicator(),
                       ),
                     ],
                   ),
